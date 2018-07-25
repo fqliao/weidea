@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "hospital")
+@Table(name = "medical_record")
 public class MedicalRecord {
 	private int id;
 	private String date;

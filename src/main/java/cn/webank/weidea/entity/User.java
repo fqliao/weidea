@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "hospital")
+@Table(name = "user")
 public class User {
 	private int id;
 	private String idCard;
