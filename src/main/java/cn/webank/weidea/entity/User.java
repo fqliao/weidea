@@ -26,7 +26,7 @@ public class User {
 		return id;
 	}
 
-	@Column(name = "idCard")
+	@Column(name = "id_card")
 	public String getIdCard() {
 		return idCard;
 	}
