@@ -34,13 +34,13 @@ public class MedicalRecord {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "user")
+	@JoinColumn(name = "user_id")
 	public User getUser() {
 		return user;
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "hospital")
+	@JoinColumn(name = "hospital_id")
 	public Hospital getHospital() {
 		return hospital;
 	}
