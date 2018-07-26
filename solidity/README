@@ -1,1 +1,27 @@
 
+这里是用solidity写的demo，主要包含写一些字段给前段，
+医患关系 信任问题
+
+bool register(string idCard;//身份证哈希值明文
+        string publicKey; //明文
+        string userName;//密文
+        string phone;//密文
+        string token;//明文 口令哈希
+        uint8  sex;) ////密文1 男，0女
+
+MedicalRecord[] (json) queryMedicalRecord(string idCard;
+        string hospital;
+        string category;
+        string item;
+        string diagnosis;
+        string proposal;
+        string date;)
+
+bool saveMedicalRecord(string idCard, 
+string hospital,
+string category, 
+string item,
+string diagnosis, 
+tring proposal,  string date)
+{
+}
