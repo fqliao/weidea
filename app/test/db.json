@@ -1,5 +1,36 @@
 {
 	"register": {
 		"status": true
+	},
+	"record": {
+		"MedicalRecord": [
+			{
+				"idCard": "35062348437192371973",
+				"hospital": "xxx医院",
+				"proposal": "sjfoq23euo0 jwej rfweofjowejfowaejfwefojwefwojsfjowjfowejfowejfowejf",
+				"category": "精神科",
+				"item": "???",
+				"date": "2018-06-06"
+			},
+			{
+				"idCard": "35062348437192371973",
+				"hospital": "xxx医院",
+				"proposal": "sjfoq23euo0 jwej rfweofjowejfowaejfwefojwefwojsfjowjfowejfowejfowejf",
+				"category": "精神科",
+				"item": "???",
+				"date": "2018-06-06"
+			},
+			{
+				"idCard": "35062348437192371973",
+				"hospital": "xxx医院",
+				"proposal": "sjfoq23euo0 jwej rfweofjowejfowaejfwefojwefwojsfjowjfowejfowejfowejf",
+				"category": "精神科",
+				"item": "???",
+				"date": "2018-06-06"
+			}
+		]
+	},
+	"saveRecord": {
+		"status": true
 	}
 }
