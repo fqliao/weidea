@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/index.vue'
+import Register from '@/components/register.vue'
 import Record from '@/components/record.vue'
 import saveRecord from '@/components/saveRecord.vue'
 
@@ -12,6 +13,11 @@ export default new Router({
       path: '/',
       name: 'index',
       component: Index
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
     },
     {
       path: '/record',
