@@ -74,7 +74,7 @@
 
 	<aop:aspectj-autoproxy />
 	<!-- block -->
-		<!-- block -->
+	<!-- block -->
 	<bean id="pool"
 		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
 		<property name="corePoolSize" value="50" />
@@ -101,7 +101,8 @@
 		<property name="outPutpath" value="./output/" />
 	</bean>
 
-	<bean id="channelService" class="org.bcos.channel.client.Service">
+	<bean id="channelService" class="org.bcos.channel.client.Service"
+		scope="prototype">
 		<property name="orgID" value="WB" />
 		<property name="connectSeconds" value="10" />
 		<property name="connectSleepPerMillis" value="10" />
@@ -109,7 +110,8 @@
 			<map>
 				<entry key="WB">
 					<bean class="org.bcos.channel.handler.ChannelConnections">
-						<property name="caCertPath" value="classpath:config/ca.crt" />
+						<property name="caCertPath"
+							value="classpath:config/ca.crt" />
 						<property name="clientKeystorePath"
 							value="classpath:config/client.keystore" />
 						<property name="keystorePassWord" value="123456" />
