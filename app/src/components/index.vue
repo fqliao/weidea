@@ -77,8 +77,8 @@ export default {
       
     },
     register(head) {
-      this.$http.post('/api/register', head).then(response => {
-        if (response.body.status) {
+      this.$http.post('/api/register', head).then(res => {
+        if (res.body.status) {
           this.dialogMsg = '注册成功'
           this.openDialog = true
         } else {
