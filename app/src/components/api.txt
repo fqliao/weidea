@@ -1,0 +1,50 @@
+api/register:
+	req:
+		userName: String,
+		idCard: String,
+		phone: String,
+		password: String,
+		sex: Int
+	res:
+		status: Boolean
+
+api/record:
+	req:
+		idCard: String,
+    startTime: Date,
+    endTime: Date,
+    category: String,
+    password: String
+  res:
+  	MedicalRecord: {
+  		[
+  			idCard: String,
+				hospital: String,
+				proposal: String,
+				category: String,
+				item: String
+				date: "Date"
+  		],
+  		[
+  			idCard: String,
+				hospital: String,
+				proposal: String,
+				category: String,
+				item: String
+				date: "Date"
+  		]
+  	}
+	  	
+
+
+api/saveRecord:
+	req:
+		idCard: String,
+    hospital: String,
+    item: String,
+    category: String,
+    proposal: String,
+    date: String,
+    password: String
+  res:
+  	status: Boolean

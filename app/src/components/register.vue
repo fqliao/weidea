@@ -11,7 +11,7 @@
       <mu-form-item label="手机号" help-text="" :rules="phoneRules" prop="phone">
         <mu-text-field v-model="form.phone" prop="phone"></mu-text-field>
       </mu-form-item>
-      <mu-form-item label="密码" help-text="" :rules="passwordRules" prop="password">
+      <mu-form-item label="口令" help-text="" :rules="passwordRules" prop="password">
         <mu-text-field v-model="form.password" type="password" prop="password"></mu-text-field>
       </mu-form-item>
       <mu-form-item>
@@ -49,7 +49,7 @@ export default {
         validate: (val) => checkPhone(val), message: '不是完整的11位手机号或者正确的手机号前七位'
       }],
       passwordRules: [{
-        validate: (val) => val.length > 6, message: '密码必须大于6位数'
+        validate: (val) => val.length === 6, message: '口令必须等于6位数'
       }],
       form: {
         userName: '',

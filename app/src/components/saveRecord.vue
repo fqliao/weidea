@@ -1,5 +1,5 @@
 <template>
-<div class="index">
+<div class="saveRecord">
   <mu-container>
     <mu-form :model="form" ref="form">
       <mu-form-item label="身份证号" help-text="" :rules="idRules" prop="idCard">
@@ -20,11 +20,11 @@
       <mu-form-item label="记录日期" help-text="" :rules="dateRules" prop="date">
         <mu-date-input v-model="form.date" label-float full-width></mu-date-input>
       </mu-form-item>
-      <mu-form-item label="密码" help-text="" :rules="passwordRules" prop="password">
+      <mu-form-item label="口令" help-text="" :rules="passwordRules" prop="password">
         <mu-text-field v-model="form.password" type="password" prop="password"></mu-text-field>
       </mu-form-item>
       <mu-form-item>
-        <mu-button color="primary" @click="submit">查询</mu-button>
+        <mu-button color="primary" @click="submit">录入</mu-button>
       </mu-form-item>
     </mu-form>
   </mu-container>
@@ -71,7 +71,7 @@ export default {
         validate: (val) => val !== undefined, message: '请选择记录日期'
       }],
       passwordRules: [{
-        validate: (val) => val.length > 6, message: '密码必须大于6位数'
+        validate: (val) => val.length === 6, message: '口令必须是6位数'
       }]
     }
 	},
