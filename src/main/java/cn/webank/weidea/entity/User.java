@@ -18,6 +18,7 @@ public class User {
 	private Date birth;
 	private String password;
 	private String phone;	
+	private int sex;
 
 	@Override
 	public String toString() {
@@ -55,6 +56,15 @@ public class User {
 	@Column(name = "phone")
 	public String getPhone() {
 		return phone;
+	}
+	
+	@Column(name = "sex")
+	public int getSex() {
+		return sex;
+	}
+
+	public void setSex(int sex) {
+		this.sex = sex;
 	}
 
 	public void setId(int id) {
