@@ -2,63 +2,45 @@ package cn.webank.weidea.entity;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "user")
 public class User {
-	private int id;
 	private String idCard;
 	private String username;
 	private Date birth;
 	private String password;
-	private String phone;	
+	private String phone;
+	private int sex;
+	private String token;
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", idCard=" + idCard + ", username=" + username + ", birth=" + birth + ", password="
-				+ password + ", phone=" + phone + "]";
-	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	public int getId() {
-		return id;
-	}
-
-	@Column(name = "id_card")
 	public String getIdCard() {
 		return idCard;
 	}
 
-	@Column(name = "username")
 	public String getUsername() {
 		return username;
 	}
 
-	@Column(name = "birth")
 	public Date getBirth() {
 		return birth;
 	}
 
-	@Column(name = "password")
 	public String getPassword() {
 		return password;
 	}
 
-	@Column(name = "phone")
 	public String getPhone() {
 		return phone;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public int getSex() {
+		return sex;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public void setIdCard(String idCard) {
@@ -79,6 +61,68 @@ public class User {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public void setSex(int sex) {
+		this.sex = sex;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((birth == null) ? 0 : birth.hashCode());
+		result = prime * result + ((idCard == null) ? 0 : idCard.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
+		result = prime * result + sex;
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (birth == null) {
+			if (other.birth != null)
+				return false;
+		} else if (!birth.equals(other.birth))
+			return false;
+		if (idCard == null) {
+			if (other.idCard != null)
+				return false;
+		} else if (!idCard.equals(other.idCard))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (phone == null) {
+			if (other.phone != null)
+				return false;
+		} else if (!phone.equals(other.phone))
+			return false;
+		if (sex != other.sex)
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "User [idCard=" + idCard + ", username=" + username + ", birth=" + birth + ", password=" + password
+				+ ", phone=" + phone + ", sex=" + sex + "]";
 	}
 
 }

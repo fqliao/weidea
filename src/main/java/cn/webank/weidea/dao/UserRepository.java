@@ -1,24 +1,22 @@
 package cn.webank.weidea.dao;
 
 import java.math.BigInteger;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.util.concurrent.ExecutionException;
 
 import javax.annotation.PostConstruct;
 
 import org.bcos.channel.client.Service;
+import org.bcos.web3j.abi.datatypes.Utf8String;
+import org.bcos.web3j.abi.datatypes.generated.Uint8;
 import org.bcos.web3j.crypto.Credentials;
 import org.bcos.web3j.crypto.ECKeyPair;
 import org.bcos.web3j.crypto.Keys;
 import org.bcos.web3j.protocol.Web3j;
 import org.bcos.web3j.protocol.channel.ChannelEthereumService;
-import org.bcos.web3j.protocol.core.methods.response.EthBlockNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import cn.webank.weidea.dao.exception.BlockChainException;
+import cn.webank.weidea.entity.User;
 import cn.webank.weidea.mcc.Kyc;
 
 @Repository
@@ -60,7 +58,22 @@ public class UserRepository {
 		}
 	}
 
-	public void find() {
+	public String findName(String idCard) {
 		Kyc kcy = getKcy();
+		try {
+			return kcy.get(new Utf8String(idCard)).get().toString();
+		} catch (Exception e) {
+			throw new BlockChainException(e);
+		}
+	}
+
+	public void save(User user) {
+		Kyc kcy = getKcy();
+		try {
+			kcy.register(new Utf8String(user.getIdCard()), new Utf8String(user.getUsername()),
+					new Utf8String(user.getPhone()), new Utf8String(user.getToken()), new Uint8(user.getSex())).get();
+		} catch (Exception e) {
+			throw new BlockChainException(e);
+		}
 	}
 }
