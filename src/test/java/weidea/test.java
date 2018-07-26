@@ -38,7 +38,7 @@ public class test {
 	public static void main(String[] args) throws Exception {
 
 		// 初始化Service
-		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:config/applicationContext2.xml");
+		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:config/applicationContext.xml");
 		Service service = context.getBean(Service.class);
 		service.run();
 
