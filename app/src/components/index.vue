@@ -49,7 +49,7 @@ export default {
       this.register(this.form)
     },
     register(head) {
-      this.$http.post('http://localhost:3002/register', head).then(response => {
+      this.$http.post('/api/register', head).then(response => {
         if (response.status) {
           // TODO
           console.log('register success')
