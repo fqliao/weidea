@@ -17,7 +17,13 @@ public class User {
 	private String username;
 	private Date birth;
 	private String password;
-	private String phone;
+	private String phone;	
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", idCard=" + idCard + ", username=" + username + ", birth=" + birth + ", password="
+				+ password + ", phone=" + phone + "]";
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
