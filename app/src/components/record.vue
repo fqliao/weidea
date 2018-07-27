@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { checkId } from '../assets/common.js' 
+import { checkId, checkToken } from '../assets/common.js' 
 export default {
 	name: 'record',
 	data() {
@@ -70,7 +70,7 @@ export default {
         validate: (val) => val.length > 0, message: '科室信息为必填项'
       }],
       passwordRules: [{
-        validate: (val) => val.length === 6, message: '口令必须大于6位数'
+        validate: (val) => checkToken(val), message: '口令必须是6位数'
       }],
       startRules: [{
         validate: (val) => val !== undefined, message: '请选择起始时间'
@@ -96,7 +96,7 @@ export default {
   methods: {
     submit() {
       this.$refs.form.validate().then(res => {
-        if (!res) {
+        if (res) {
           let form = Object.assign({}, this.form)
           console.log('req', form)
           this.$http.post('api/record', form).then(res => {

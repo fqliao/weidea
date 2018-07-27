@@ -91,7 +91,12 @@ function checkPhone(phone) {
   }
 }
 
+function checkToken(token) {
+  return /^\d{6}$/.test(token)
+}
+
 module.exports = {
   checkId,
-  checkPhone
+  checkPhone,
+  checkToken
 }

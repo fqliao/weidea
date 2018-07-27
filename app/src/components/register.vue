@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { checkId, checkPhone } from '../assets/common.js' 
+import { checkId, checkPhone, checkToken } from '../assets/common.js' 
 export default {
 	name: 'register',
 	data() {
@@ -49,7 +49,7 @@ export default {
         validate: (val) => checkPhone(val), message: '不是完整的11位手机号或者正确的手机号前七位'
       }],
       passwordRules: [{
-        validate: (val) => val.length === 6, message: '口令必须等于6位数'
+        validate: (val) => checkToken(val), message: '口令必须等于6位数'
       }],
       form: {
         userName: '',
@@ -79,7 +79,7 @@ export default {
     register(head) {
       this.$http.post('api/register', head).then(res => {
         console.log('res', res)
-        if (res.body.status) {
+        if (res.body) {
           this.dialogMsg = '注册成功'
           this.openDialog = true
         } else {

@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { checkId } from '../assets/common.js' 
+import { checkId, checkToken } from '../assets/common.js' 
 export default {
 	name: 'record',
 	data() {
@@ -71,7 +71,7 @@ export default {
         validate: (val) => val !== undefined, message: '请选择记录日期'
       }],
       passwordRules: [{
-        validate: (val) => val.length === 6, message: '口令必须是6位数'
+        validate: (val) => checkToken(val), message: '口令必须是6位数'
       }]
     }
 	},
@@ -87,7 +87,7 @@ export default {
           let form = Object.assign({}, this.form)
           this.$http.post('api/saveRecord', form).then(res => {
             console.log('res', res)
-            if (res.body.status) {
+            if (res.body) {
               this.dialogMsg = '上链成功'
               this.openDialog = true
             } else {
