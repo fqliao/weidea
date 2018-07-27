@@ -78,6 +78,7 @@ export default {
     },
     register(head) {
       this.$http.post('api/register', head).then(res => {
+        console.log('res', res)
         if (res.body.status) {
           this.dialogMsg = '注册成功'
           this.openDialog = true

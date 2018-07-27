@@ -86,6 +86,7 @@ export default {
         if (result) {
           let form = Object.assign({}, this.form)
           this.$http.post('api/saveRecord', form).then(res => {
+            console.log('res', res)
             if (res.body.status) {
               this.dialogMsg = '上链成功'
               this.openDialog = true

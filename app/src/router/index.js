@@ -28,12 +28,18 @@ export default new Router({
     {
       path: '/record',
       name: 'record',
-      component: Record
+      component: Record,
+      meta: {
+        title: '查询信息'
+      }
     },
     {
       path: '/saveRecord',
       name: 'saveRecord',
-      component: saveRecord
+      component: saveRecord,
+      meta: {
+        title: '录入信息'
+      }
     }
   ]
 })

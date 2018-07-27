@@ -1,4 +1,6 @@
 function checkId(idcard) {
+  // TEST
+  return true
   // const Errors = new Array("验证通过!", "身份证号码位数不对!", "身份证号码出生日期超出范围或含有非法字符!", "身份证号码校验错误!", "身份证地区非法!")
   const area = {
     11: "北京",
