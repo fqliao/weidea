@@ -52,17 +52,21 @@ public class RecordService {
 	}
 	
 	boolean filterRecordByCondition(SearchMedicalRecordReq smr,MedicalRecord record){
-		if(record.getIdCard().equals(smr.getIdCard())) {
+		if(!record.getIdCard().equals(smr.getIdCard())) 
+			return false;
+		//校验token--LULU
+		
+		if(smr.getStartTime()!=null&&smr.getEndTime()!=null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String startdate = sdf.format(smr.getStartTime());
 			String enddate=sdf.format(smr.getEndTime());
-			if(compare_date(record.getDate(),startdate)!=1&&
-					compare_date(record.getDate(),enddate)!=-1){
-					if(record.getCategory().equals(smr.getCategory()))
-						return true;
-			}
+			if(!(compare_date(record.getDate(),startdate)!=1&&
+					compare_date(record.getDate(),enddate)!=-1))
+				return false;		
 		}
-		return false;
+		if(record.getCategory()!=null && !record.getCategory().equals(smr.getCategory()))
+			return false;			
+		return true;
 	}
 	
 	private MedicalRecord convertToMedicalRecord(SaveMedicalRecordReq record) {
