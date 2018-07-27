@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import cn.webank.weidea.dao.exception.BlockChainException;
+import cn.webank.weidea.entity.ContractAddress;
 import cn.webank.weidea.entity.MedicalRecord;
 import cn.webank.weidea.mcc.Record;
 
@@ -25,7 +26,8 @@ import cn.webank.weidea.mcc.Record;
 public class MedicalRecordRepository {
 	@Autowired
 	private Service service;
-
+	@Autowired
+	private ContractAddressRepository contractAddressRepository;
 	private Record record;
 
 	@PostConstruct
@@ -55,7 +57,14 @@ public class MedicalRecordRepository {
 				java.math.BigInteger gasLimit = new BigInteger("30000000");
 				java.math.BigInteger initialWeiValue = new BigInteger("0");
 				// 部署合约
-				this.record = Record.deploy(web3, credentials, gasPrice, gasLimit, initialWeiValue).get();
+				String contractAddress = contractAddressRepository.findAddressByCategory(Record.class.getName());
+				if (contractAddress == null) {
+					this.record = Record.deploy(web3, credentials, gasPrice, gasLimit, initialWeiValue).get();
+					contractAddressRepository
+							.save(new ContractAddress(record.getContractAddress(), Record.class.getName()));
+				} else {
+					this.record = Record.load(contractAddress, web3, credentials, gasPrice, gasLimit);
+				}
 			} catch (Exception e) {
 				throw new BlockChainException(e);
 			}
@@ -97,7 +106,7 @@ public class MedicalRecordRepository {
 			record.saveMedicalRecord(new Utf8String(medicalRecord.getIdCard()),
 					new Utf8String(medicalRecord.getHospital()), new Utf8String(medicalRecord.getCategory()),
 					new Utf8String(medicalRecord.getItem()), new Utf8String(medicalRecord.getDiagnosis()),
-					new Utf8String(medicalRecord.getProposal()), new Utf8String(medicalRecord.getDate()));
+					new Utf8String(medicalRecord.getProposal()), new Utf8String(medicalRecord.getDate())).get();
 		} catch (Exception e) {
 			throw new BlockChainException(e);
 		}

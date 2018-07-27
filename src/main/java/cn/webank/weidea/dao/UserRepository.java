@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.io.IOUtils;
 import org.bcos.channel.client.Service;
 import org.bcos.web3j.abi.datatypes.Type;
 import org.bcos.web3j.abi.datatypes.Utf8String;
@@ -20,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import cn.webank.weidea.dao.exception.BlockChainException;
+import cn.webank.weidea.entity.ContractAddress;
 import cn.webank.weidea.entity.User;
 import cn.webank.weidea.mcc.Kyc;
 
@@ -27,6 +27,8 @@ import cn.webank.weidea.mcc.Kyc;
 public class UserRepository {
 	@Autowired
 	private Service service;
+	@Autowired
+	private ContractAddressRepository contractAddressRepository;
 	private Kyc kyc;
 
 	@PostConstruct
@@ -57,7 +59,13 @@ public class UserRepository {
 				java.math.BigInteger initialWeiValue = new BigInteger("0");
 
 				// 部署合约
-				this.kyc = Kyc.deploy(web3, credentials, gasPrice, gasLimit, initialWeiValue).get();
+				String contractAddress = contractAddressRepository.findAddressByCategory(Kyc.class.getName());
+				if (contractAddress == null) {
+					this.kyc = Kyc.deploy(web3, credentials, gasPrice, gasLimit, initialWeiValue).get();
+					contractAddressRepository.save(new ContractAddress(kyc.getContractAddress(), Kyc.class.getName()));
+				} else {
+					this.kyc = Kyc.load(contractAddress, web3, credentials, gasPrice, gasLimit);
+				}
 			} catch (Exception e) {
 				throw new BlockChainException(e);
 			}
@@ -88,7 +96,6 @@ public class UserRepository {
 	public int count() {
 		Kyc kcy = getKcy();
 		try {
-			Object count = kcy.numPerson().get();
 			return kcy.numPerson().get().getValue().intValue();
 		} catch (Exception e) {
 			throw new BlockChainException(e);
@@ -108,6 +115,14 @@ public class UserRepository {
 			user.setToken(list.get(4).getValue().toString());
 			user.setSex(Integer.valueOf(list.get(5).getValue().toString()));
 			return user;
+		} catch (Exception e) {
+			throw new BlockChainException(e);
+		}
+	}
+
+	public void updatePhoneByIdCardAndToken(String idCard, String token, String phone) {
+		try {
+			getKcy().updateTokenAndPhone(new Utf8String(idCard), new Utf8String(token), new Utf8String(phone)).get();
 		} catch (Exception e) {
 			throw new BlockChainException(e);
 		}
