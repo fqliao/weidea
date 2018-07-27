@@ -9,8 +9,8 @@ public class DecryptReq {
 	@JsonProperty(value = "token")
 	private String token;
 	
-	@JsonProperty(value = "plaintext")
-	private String plaintext;
+	@JsonProperty(value = "ciphertext")
+	private String ciphertext;
 
 	public String getIdCard() {
 		return idCard;
@@ -28,18 +28,20 @@ public class DecryptReq {
 		this.token = token;
 	}
 
-	public String getPlaintext() {
-		return plaintext;
+	public String getCiphertext() {
+		return ciphertext;
 	}
 
-	public void setPlaintext(String plaintext) {
-		this.plaintext = plaintext;
+	public void setCiphertext(String ciphertext) {
+		this.ciphertext = ciphertext;
 	}
 
 	@Override
 	public String toString() {
-		return "DecryptReq [idCard=" + idCard + ", token=" + token + ", plaintext=" + plaintext + "]";
+		return "DecryptReq [idCard=" + idCard + ", token=" + token + ", ciphertext=" + ciphertext + "]";
 	}
+
+	
 	
 	
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.webank.weidea.dao.KeyManagementRepository;
-import cn.webank.weidea.dao.exception.KeyManagementException;
+import cn.webank.weidea.dto.DecryptReq;
 import cn.webank.weidea.dto.KeyManagementRsp;
 import cn.webank.weidea.entity.KeyManagement;
 import cn.webank.weidea.service.KeyManagementService;
@@ -36,9 +36,6 @@ public class KeyManagementServiceIm extends BaseServiceIm implements KeyManageme
 		encryptUtils.SecretKey();
 		keyManagement.setPrivateKey(encryptUtils.getPrivateKey());
 		
-		System.out.println("============================================");
-		System.out.println(encryptUtils.getPrivateKey());
-		System.out.println("============================================");
 		
 		KeyManagement result = keyManagementDao.save(keyManagement);
 		if(result != null) {
@@ -50,6 +47,52 @@ public class KeyManagementServiceIm extends BaseServiceIm implements KeyManageme
 			response.setErrorMsg("录入信息失败");
 			response.setData(null);
 		}
+		
+		return response;
+	}
+
+	@Override
+	public KeyManagementRsp Decrypt(DecryptReq req) {
+		KeyManagementRsp response = new KeyManagementRsp();
+		
+		//获取记录
+		KeyManagement record = keyManagementDao.searchRecord(req.getIdCard());
+		if(record == null) {
+			response.setCode(1);
+			response.setErrorMsg("该用户不存在");
+			response.setData(null);
+			
+			return response;
+		}
+		
+		//验证token
+		TokenEncryptUtils tokenUtils = new TokenEncryptUtils();
+		String temp = tokenUtils.Encrypt(req.getToken(), "");
+		if(record.getToken().equals(temp)) {
+			response.setCode(1);
+			response.setErrorMsg("密码错误");
+			response.setData(null);
+			
+			return response;
+		}
+		
+		//解密数据
+		EncryptUtils encryptUtils = new EncryptUtils();
+		String plaintext = encryptUtils.Decrypt(record.getPrivateKey(), req.getCiphertext());
+		System.out.println("============================================");
+		System.out.println(plaintext);
+		System.out.println("============================================");
+		if(plaintext == null) {
+			response.setCode(1);
+			response.setErrorMsg("解密失败");
+			response.setData(null);
+			
+			return response;
+		}
+		
+		response.setCode(0);
+		response.setErrorMsg(null);
+		response.setData(plaintext);
 		
 		return response;
 	}

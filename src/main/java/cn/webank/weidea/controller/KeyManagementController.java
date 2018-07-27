@@ -19,6 +19,7 @@ import cn.webank.weidea.dto.KeyManagementRsp;
 import cn.webank.weidea.dto.SecretKeyReq;
 import cn.webank.weidea.entity.KeyManagement;
 import cn.webank.weidea.service.KeyManagementService;
+import cn.webank.weidea.util.EncryptUtils;
 
 
 @Controller
@@ -45,6 +46,7 @@ public class KeyManagementController {
 		keyManagement.setToken(keyManagementReq.getToken());
 		
 		KeyManagementRsp keyManagementRsp = keyManagementService.secretKey(keyManagement);
+		
 		String Response = response.toJson(keyManagementRsp);
 		
 		return Response;
@@ -52,7 +54,7 @@ public class KeyManagementController {
 	
 	
 	@RequestMapping(value="/decrypt",method=RequestMethod.POST)
-	public @ResponseBody Gson Decrypt(
+	public @ResponseBody String Decrypt(
 			@RequestBody String requestBody,
 			HttpServletRequest httpRequest,
 			HttpServletResponse httpResponse) {
@@ -63,14 +65,11 @@ public class KeyManagementController {
 		decryptReq = request.fromJson(requestBody,DecryptReq.class);
 		
 		
-		KeyManagement keyManagement = new KeyManagement();
-		keyManagement.setIdCard(decryptReq.getIdCard());
-		keyManagement.setToken(decryptReq.getToken());
+		KeyManagementRsp rsp = keyManagementService.Decrypt(decryptReq);
 		
+		String Response = response.toJson(rsp);
 		
-		
-		
-		return response;
+		return Response;
 	}
 	
 }
