@@ -27,6 +27,7 @@ public class RegisterController {
 	@ResponseBody
 	@RequestMapping(value = "api/register")
 	public boolean register(HttpServletRequest request) {
+		//获取json数据
 		BufferedReader br;
 		StringBuilder sb = null;
 		JSONObject jsonObject = null;
