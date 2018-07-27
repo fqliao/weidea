@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.io.IOUtils;
 import org.bcos.channel.client.Service;
 import org.bcos.web3j.abi.datatypes.Type;
 import org.bcos.web3j.abi.datatypes.Utf8String;
@@ -26,6 +27,7 @@ import cn.webank.weidea.mcc.Kyc;
 public class UserRepository {
 	@Autowired
 	private Service service;
+	private Kyc kyc;
 
 	@PostConstruct
 	private void init() {
@@ -37,34 +39,36 @@ public class UserRepository {
 	}
 
 	private Kyc getKcy() {
+		if (kyc == null) {
+			try {
+				ChannelEthereumService channelEthereumService = new ChannelEthereumService();
+				channelEthereumService.setChannelService(service);
 
-		try {
-			ChannelEthereumService channelEthereumService = new ChannelEthereumService();
-			channelEthereumService.setChannelService(service);
+				// 使用AMOP消息信道初始化web3j
+				Web3j web3 = Web3j.build(channelEthereumService);
 
-			// 使用AMOP消息信道初始化web3j
-			Web3j web3 = Web3j.build(channelEthereumService);
+				// 初始化交易签名私钥
+				ECKeyPair keyPair = Keys.createEcKeyPair();
+				Credentials credentials = Credentials.create(keyPair);
 
-			// 初始化交易签名私钥
-			ECKeyPair keyPair = Keys.createEcKeyPair();
-			Credentials credentials = Credentials.create(keyPair);
+				// 初始化交易参数
+				java.math.BigInteger gasPrice = new BigInteger("30000000");
+				java.math.BigInteger gasLimit = new BigInteger("30000000");
+				java.math.BigInteger initialWeiValue = new BigInteger("0");
 
-			// 初始化交易参数
-			java.math.BigInteger gasPrice = new BigInteger("30000000");
-			java.math.BigInteger gasLimit = new BigInteger("30000000");
-			java.math.BigInteger initialWeiValue = new BigInteger("0");
-
-			// 部署合约
-			return Kyc.deploy(web3, credentials, gasPrice, gasLimit, initialWeiValue).get();
-		} catch (Exception e) {
-			throw new BlockChainException(e);
+				// 部署合约
+				this.kyc = Kyc.deploy(web3, credentials, gasPrice, gasLimit, initialWeiValue).get();
+			} catch (Exception e) {
+				throw new BlockChainException(e);
+			}
 		}
+		return this.kyc;
 	}
 
-	public String findName(String idCard) {
+	public String findPublishKey(String idCard) {
 		Kyc kcy = getKcy();
 		try {
-			return kcy.get(new Utf8String(idCard)).get().toString();
+			return kcy.getPublicKey(new Utf8String(idCard)).get().toString();
 		} catch (Exception e) {
 			throw new BlockChainException(e);
 		}
@@ -73,8 +77,9 @@ public class UserRepository {
 	public void save(User user) {
 		Kyc kcy = getKcy();
 		try {
-			kcy.register(new Utf8String(user.getIdCard()), new Utf8String(user.getUsername()),
-					new Utf8String(user.getPhone()), new Utf8String(user.getToken()), new Uint8(user.getSex())).get();
+			kcy.register(new Utf8String(user.getIdCard()), new Utf8String(user.getPublishKey()),
+					new Utf8String(user.getUsername()), new Utf8String(user.getPhone()),
+					new Utf8String(user.getToken()), new Uint8(user.getSex())).get();
 		} catch (Exception e) {
 			throw new BlockChainException(e);
 		}
@@ -83,6 +88,7 @@ public class UserRepository {
 	public int count() {
 		Kyc kcy = getKcy();
 		try {
+			Object count = kcy.numPerson().get();
 			return kcy.numPerson().get().getValue().intValue();
 		} catch (Exception e) {
 			throw new BlockChainException(e);

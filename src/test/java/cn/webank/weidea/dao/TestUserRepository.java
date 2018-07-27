@@ -21,11 +21,10 @@ public class TestUserRepository {
 		try {
 			int count = userRepository.count();
 			String idCard = String.valueOf(System.currentTimeMillis());
-			userRepository.save(new User(idCard, idCard + "aa", "123456789", 1, "a", "bb"));
-			Assert.assertEquals(count, userRepository.count());
-			count++;
-			String name = userRepository.findName(idCard);
-			Assert.assertEquals(idCard + "aa", name);
+			userRepository.save(new User(idCard, idCard + "aa", "123456789", 1, "a", idCard + "bb"));
+			Assert.assertEquals(count + 1, userRepository.count());
+			String name = userRepository.findPublishKey(idCard);
+			Assert.assertEquals(idCard + "bb", name);
 		} catch (Exception e) {
 			Assert.fail();
 		}
