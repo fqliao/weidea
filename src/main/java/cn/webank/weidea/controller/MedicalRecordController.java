@@ -42,7 +42,7 @@ public class MedicalRecordController {
 		Gson request = new Gson();
 		SearchMedicalRecordReq searchMedicalRecordReq = new SearchMedicalRecordReq();
 		searchMedicalRecordReq = request.fromJson(requestBody,SearchMedicalRecordReq.class);
-		
+
 		List<MedicalRecord> mrs=recordService.searchRecord(searchMedicalRecordReq);
 		
 		for(MedicalRecord mr: mrs) {

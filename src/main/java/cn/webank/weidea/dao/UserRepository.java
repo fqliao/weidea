@@ -86,8 +86,8 @@ public class UserRepository {
 		Kyc kcy = getKcy();
 		try {
 			kcy.register(new Utf8String(user.getIdCard()), new Utf8String(user.getPublishKey()),
-					new Utf8String(user.getUsername()), new Utf8String(user.getPhone()),
-					new Utf8String(user.getToken()), new Uint8(user.getSex())).get();
+					new Utf8String(user.getUsername()), new Utf8String(user.getPhone()), new Uint8(user.getSex()))
+					.get();
 		} catch (Exception e) {
 			throw new BlockChainException(e);
 		}
@@ -122,7 +122,7 @@ public class UserRepository {
 
 	public void updatePhoneByIdCardAndToken(String idCard, String token, String phone) {
 		try {
-			getKcy().updateTokenAndPhone(new Utf8String(idCard), new Utf8String(token), new Utf8String(phone)).get();
+			getKcy().updatePhone(new Utf8String(idCard), new Utf8String(phone)).get();
 		} catch (Exception e) {
 			throw new BlockChainException(e);
 		}
