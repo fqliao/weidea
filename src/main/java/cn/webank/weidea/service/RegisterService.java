@@ -36,7 +36,7 @@ public class RegisterService {
 			//传输口令给第三方
 			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	private String getPulibcKeyFromPKI(String idCard) {
