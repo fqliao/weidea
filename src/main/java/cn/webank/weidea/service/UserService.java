@@ -18,7 +18,7 @@ public class UserService {
 			"^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$");
 
 	public void register(User user) {
-		if (userRepository.findName(user.getIdCard()) != null) {
+		if (userRepository.findPublishKey(user.getIdCard()) != null) {
 			throw new CheckException("该身份证已存在");
 		}
 

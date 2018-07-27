@@ -26,6 +26,8 @@ public class MedicalRecordRepository {
 	@Autowired
 	private Service service;
 
+	private Record record;
+
 	@PostConstruct
 	private void init() {
 		try {
@@ -36,28 +38,29 @@ public class MedicalRecordRepository {
 	}
 
 	private Record getRecord() {
+		if (record == null) {
+			try {
+				ChannelEthereumService channelEthereumService = new ChannelEthereumService();
+				channelEthereumService.setChannelService(service);
 
-		try {
-			ChannelEthereumService channelEthereumService = new ChannelEthereumService();
-			channelEthereumService.setChannelService(service);
+				// 使用AMOP消息信道初始化web3j
+				Web3j web3 = Web3j.build(channelEthereumService);
 
-			// 使用AMOP消息信道初始化web3j
-			Web3j web3 = Web3j.build(channelEthereumService);
+				// 初始化交易签名私钥
+				ECKeyPair keyPair = Keys.createEcKeyPair();
+				Credentials credentials = Credentials.create(keyPair);
 
-			// 初始化交易签名私钥
-			ECKeyPair keyPair = Keys.createEcKeyPair();
-			Credentials credentials = Credentials.create(keyPair);
-
-			// 初始化交易参数
-			java.math.BigInteger gasPrice = new BigInteger("30000000");
-			java.math.BigInteger gasLimit = new BigInteger("30000000");
-			java.math.BigInteger initialWeiValue = new BigInteger("0");
-
-			// 部署合约
-			return Record.deploy(web3, credentials, gasPrice, gasLimit, initialWeiValue).get();
-		} catch (Exception e) {
-			throw new BlockChainException(e);
+				// 初始化交易参数
+				java.math.BigInteger gasPrice = new BigInteger("30000000");
+				java.math.BigInteger gasLimit = new BigInteger("30000000");
+				java.math.BigInteger initialWeiValue = new BigInteger("0");
+				// 部署合约
+				this.record = Record.deploy(web3, credentials, gasPrice, gasLimit, initialWeiValue).get();
+			} catch (Exception e) {
+				throw new BlockChainException(e);
+			}
 		}
+		return this.record;
 	}
 
 	public int count() {
