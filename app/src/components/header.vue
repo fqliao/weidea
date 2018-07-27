@@ -1,27 +1,43 @@
 <template>
-<div class="header">
+<div class="header" v-show="headerShow">
 	<mu-appbar class="header-contain" color="primary">
     <mu-avatar color="teal" slot="left" @click="goIndex">
     	<img src="../../static/logo.png">
   	</mu-avatar>
 	  <p @click="goIndex">医链云</p>
-	  <mu-button flat slot="right" @click="goRegister">
-	  	<p class="header-register">注册</p>
+	  <mu-button flat slot="right">
+	  	<p class="header-user">{{user}}</p>
 	  </mu-button>
 	</mu-appbar>
 </div>
 </template>
 
 <script>
+import bus from '../assets/eventBus.js'
 export default {
 	name: 'Header',
-	methods: {
-		goRegister() {
-			this.$router.push('/register')
-		},
-		goIndex() {
-			this.$router.push('/')
+	data() {
+		return {
+			headerShow: true,
+			user: '',
+			goIndex: () => {}
 		}
+	},
+	mounted() {
+		bus.$on('user', msg => {
+			this.user = msg
+		})
+		bus.$on('headerShow', msg => {
+			this.headerShow = msg
+		})
+		bus.$on('goIndex', msg => {
+			this.goIndex = msg
+		})
+	},
+	methods: {
+		// goIndex() {
+		// 	this.$router.push('/')
+		// }
 	}
 }
 </script>
@@ -31,7 +47,7 @@ export default {
 		width: 100%;
 		padding: 0 1rem;
 	}
-	.header-register {
+	.header-user {
 		font-size: 1.2rem;
 	}
 </style>
