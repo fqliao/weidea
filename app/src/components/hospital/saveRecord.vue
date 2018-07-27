@@ -5,9 +5,6 @@
       <mu-form-item label="身份证号" help-text="" :rules="idRules" prop="idCard">
         <mu-text-field v-model="form.idCard" prop="idCard"></mu-text-field>
       </mu-form-item>
-      <mu-form-item label="医院" help-text="" :rules="hospitalRules" prop="hospital">
-        <mu-text-field v-model="form.hospital" prop="hospital"></mu-text-field>
-      </mu-form-item>
       <mu-form-item label="科室" help-text="" :rules="categoryRules" prop="category">
         <mu-text-field v-model="form.category" prop="category"></mu-text-field>
       </mu-form-item>
@@ -16,6 +13,9 @@
       </mu-form-item>
       <mu-form-item label="诊断结果" help-text="" :rules="proposalRules" prop="proposal">
         <mu-text-field v-model="form.proposal" prop="proposal"></mu-text-field>
+      </mu-form-item>
+      <mu-form-item label="处方" help-text="" :rules="prescriptionRules" prop="prescription">
+        <mu-text-field v-model="form.prescription" prop="prescription"></mu-text-field>
       </mu-form-item>
       <mu-form-item label="记录日期" help-text="" :rules="dateRules" prop="date">
         <mu-date-input v-model="form.date" label-float full-width></mu-date-input>
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { checkId, checkToken } from '../assets/common.js' 
+import { checkId, checkToken } from '../../assets/common.js' 
 export default {
 	name: 'record',
 	data() {
@@ -55,9 +55,6 @@ export default {
       idRules: [{
         validate: (val) => checkId(val), message: '身份证号码校验错误'
       }],
-      hospitalRules: [{
-        validate: (val) => val.length > 0, message: '医院为必填项'
-      }],
       categoryRules: [{
         validate: (val) => val.length > 0, message: '科室信息为必填项'
       }],
@@ -66,6 +63,9 @@ export default {
       }],
       proposalRules: [{
         validate: (val) => val.length > 0, message: '诊断结果为必填项'
+      }],
+      prescriptionRules: [{
+        validate: (val) => val.length > 0, message: '处方为必填项'
       }],
       dateRules: [{
         validate: (val) => val !== undefined, message: '请选择记录日期'
@@ -85,8 +85,10 @@ export default {
       this.$refs.form.validate().then(result => {
         if (result) {
           let form = Object.assign({}, this.form)
+          const info = this.getData('hospitalInfo')
+          form['hospital'] = info['hospital'] + ',' + info['doctor']
+          console.log('req', form)
           this.$http.post('api/saveRecord', form).then(res => {
-            console.log('res', res)
             if (res.body) {
               this.dialogMsg = '上链成功'
               this.openDialog = true

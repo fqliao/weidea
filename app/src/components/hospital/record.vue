@@ -37,7 +37,8 @@
               <td class="is-left">{{scope.row.hospital}}</td>
               <td class="is-left">{{scope.row.category}}</td>
               <td class="is-left">{{scope.row.item}}</td>
-              <td class="is-left">{{scope.row.proposal}}%</td>
+              <td class="is-left">{{scope.row.proposal}}</td>
+              <td class="is-left">{{scope.row.prescription}}</td>
             </template>
           </mu-data-table>
         </mu-paper>
@@ -48,7 +49,7 @@
 </template>
 
 <script>
-import { checkId, checkToken } from '../assets/common.js' 
+import { checkId, checkToken } from '../../assets/common.js' 
 export default {
 	name: 'record',
 	data() {
@@ -87,7 +88,8 @@ export default {
         { title: '医院', name: 'hospital', width: 180},
         { title: '科室', name: 'category', width: 180},
         { title: '检测项目', name: 'item', width: 180},
-        { title: '诊断结果', name: 'proposal', width: 300},
+        { title: '诊断结果', name: 'proposal', width: 250},
+        { title: '处方', name: 'prescription', width: 250}
       ]
     }
 	},
@@ -95,12 +97,10 @@ export default {
   },
   methods: {
     submit() {
-      this.$refs.form.validate().then(res => {
-        if (res) {
+      this.$refs.form.validate().then(result => {
+        if (result) {
           let form = Object.assign({}, this.form)
-          console.log('req', form)
           this.$http.post('api/record', form).then(res => {
-            console.log('res', res)
             this.list = res.body.MedicalRecord
             this.showOut = false
             setTimeout(() => {

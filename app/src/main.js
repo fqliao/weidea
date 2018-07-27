@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import vueResource from 'vue-resource'
 import MuseUI from 'muse-ui'
+import util from './assets/util.js'
 import 'muse-ui/dist/muse-ui.css'
 
 
@@ -12,6 +13,7 @@ Vue.config.productionTip = false
 
 Vue.use(vueResource)
 Vue.use(MuseUI)
+Vue.use(util)
 
 /* eslint-disable no-new */
 new Vue({

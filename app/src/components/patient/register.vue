@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { checkId, checkPhone, checkToken } from '../assets/common.js' 
+import { checkId, checkPhone, checkToken } from '../../assets/common.js' 
 export default {
 	name: 'register',
 	data() {
@@ -78,7 +78,6 @@ export default {
     },
     register(head) {
       this.$http.post('api/register', head).then(res => {
-        console.log('res', res)
         if (res.body) {
           this.dialogMsg = '注册成功'
           this.openDialog = true

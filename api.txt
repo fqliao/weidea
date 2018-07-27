@@ -1,4 +1,4 @@
-api/register:
+api/register [POST]:
 	req:
 		userName: String,
 		idCard: String,
@@ -6,9 +6,9 @@ api/register:
 		password: String,
 		sex: Int
 	res:
-		status: Boolean
+		Boolean
 
-api/record:
+api/record [POST]:
 	req:
 		idCard: String,
     startTime: Date,
@@ -23,7 +23,8 @@ api/record:
 				proposal: String,
 				category: String,
 				item: String
-				date: "Date"
+				date: Date,
+				prescription: String
   		],
   		[
   			idCard: String,
@@ -31,20 +32,44 @@ api/record:
 				proposal: String,
 				category: String,
 				item: String
-				date: "Date"
+				date: Date
   		]
   	}
 	  	
-
-
-api/saveRecord:
+api/saveRecord [POST]:
 	req:
 		idCard: String,
     hospital: String,
     item: String,
     category: String,
     proposal: String,
-    date: String,
-    password: String
+    date: Date,
+    password: String,
+    prescription: String
   res:
-  	status: Boolean
+  	Boolean
+	    
+api/searchRecord [POST]:
+	req:
+		idCard: String,
+		hospital: String,
+		password: String,
+		startTime: Date,
+		endTime: Date
+	res:
+		info: {
+			[
+				idCard: String,
+				hospital: String,
+				recordUrl: String,
+				date: Date
+			],
+			[
+				idCard: String,
+				hospital: String,
+				recordUrl: String,
+				date: Date
+			]
+		}
+
+
