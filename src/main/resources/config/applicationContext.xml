@@ -118,7 +118,7 @@
 						<property name="clientCertPassWord" value="123456" />
 						<property name="connectionsStr">
 							<list>
-								<value>node1@54.191.7.108:8829</value>
+								<value>node1@54.191.7.108:8830</value>
 							</list>
 						</property>
 					</bean>

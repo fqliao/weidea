@@ -29,5 +29,7 @@ public class TestUserRepository {
 		} catch (Exception e) {
 			Assert.fail();
 		}
+		System.out.println("success");
+		System.exit(0);
 	}
 }

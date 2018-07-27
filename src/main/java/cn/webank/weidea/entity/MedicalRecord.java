@@ -9,6 +9,21 @@ public class MedicalRecord {
 	private String category;
 	private String item;
 
+	public MedicalRecord() {
+	}
+
+	public MedicalRecord(String date, String idCard, String hospital, String diagnosis, String proposal,
+			String category, String item) {
+		super();
+		this.date = date;
+		this.idCard = idCard;
+		this.hospital = hospital;
+		this.diagnosis = diagnosis;
+		this.proposal = proposal;
+		this.category = category;
+		this.item = item;
+	}
+
 	public String getDate() {
 		return date;
 	}

@@ -20,7 +20,7 @@ public class RegisterController {
 		User user=new User();
 		user.setIdCard(req.getParameter("idCard"));
 		user.setUsername(req.getParameter("userName"));
-		user.setPassword(req.getParameter("password"));
+//		user.setPassword(req.getParameter("password"));
 		user.setPhone(req.getParameter("phone"));
 		if(req.getParameter("sex")!=null) {
 			user.setSex(Integer.parseInt(req.getParameter("sex")));
