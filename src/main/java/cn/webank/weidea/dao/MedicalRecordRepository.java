@@ -30,18 +30,10 @@ public class MedicalRecordRepository {
 	private ContractAddressRepository contractAddressRepository;
 	private Record record;
 
-	@PostConstruct
-	private void init() {
-		try {
-			service.run();
-		} catch (Exception e) {
-			throw new BlockChainException(e);
-		}
-	}
-
 	private Record getRecord() {
 		if (record == null) {
 			try {
+				service.run();
 				ChannelEthereumService channelEthereumService = new ChannelEthereumService();
 				channelEthereumService.setChannelService(service);
 

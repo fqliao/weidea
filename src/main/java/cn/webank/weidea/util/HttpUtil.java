@@ -13,11 +13,13 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.CharArrayBuffer;
 import org.apache.http.util.EntityUtils;
+import org.springframework.http.StreamingHttpOutputMessage;
 
 public class HttpUtil {
 
@@ -30,17 +32,17 @@ public class HttpUtil {
 	 *            参数
 	 * @return 返回值
 	 */
-	public static String postMap(String url, Map<String, String> map) {
+	public static String postMap(String url, String json) {
 		String result = null;
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		HttpPost post = new HttpPost(url);
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-		for (Map.Entry<String, String> entry : map.entrySet()) {
-			pairs.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
-		}
+//		for (Map.Entry<String, String> entry : map.entrySet()) {
+//			pairs.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+//		}
 		CloseableHttpResponse response = null;
 		try {
-			post.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
+			post.setEntity(new ByteArrayEntity(json.getBytes("UTF-8")));
 			response = httpClient.execute(post);
 			if (response != null && response.getStatusLine().getStatusCode() == 200) {
 				HttpEntity entity = response.getEntity();
