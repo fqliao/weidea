@@ -19,8 +19,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang = "scss">
 .content {
   margin-top: 5rem;
+  @media screen and (max-width: 600px) {
+    margin-top: 1rem;
+  }
 }
 </style>

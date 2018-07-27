@@ -12,12 +12,18 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      component: Index
+      component: Index,
+      meta: {
+        title: '医链云'
+      }
     },
     {
       path: '/register',
       name: 'register',
-      component: Register
+      component: Register,
+      meta: {
+        title: '注册'
+      }
     },
     {
       path: '/record',

@@ -29,9 +29,9 @@ export default {
 <style>
 	.header-contain {
 		width: 100%;
-		padding: 0 3rem;
+		padding: 0 1rem;
 	}
 	.header-register {
-		font-size: 18px;
+		font-size: 1.2rem;
 	}
 </style>

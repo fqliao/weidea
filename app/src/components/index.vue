@@ -32,21 +32,25 @@ export default {
 
 <style lang = "scss">
 .index {
+  margin: 0 1rem;
   text-align: center;
   h1 {
     color: #333;
-    font-size: 60px;
-    margin: 5rem 0;
+    font-size: 4rem;
+    margin: 2rem 0;
   }
   h3 {
     color: #333;
-    font-size: 36px;
+    font-size: 2rem;
   }
   .container-btn {
-    margin-top: 5rem;
+    margin-top: 2rem;
     .btn {
-      font-size: 18px;
-      margin: 0 3rem;
+      font-size: 1.2rem;
+      margin: 0 1rem;
+      @media screen and (max-width: 600px) {
+        margin: 0;        
+      }
     }
   }
 }

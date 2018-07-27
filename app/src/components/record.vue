@@ -96,9 +96,11 @@ export default {
   methods: {
     submit() {
       this.$refs.form.validate().then(res => {
-        if (res) {
+        if (!res) {
           let form = Object.assign({}, this.form)
+          console.log('req', form)
           this.$http.post('api/record', form).then(res => {
+            console.log('res', res)
             this.list = res.body.MedicalRecord
             this.showOut = false
             setTimeout(() => {
