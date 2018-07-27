@@ -34,10 +34,25 @@ public class SaveMedicalRecordReq {
 	
 	@JsonProperty(value = "password")
 	private String password;
+	
+	@JsonProperty(value = "diagnosis")
+	private String diagnosis;
 
 	public String getIdCard() {
 		return idCard;
 	}
+	
+	 
+	public String getDiagnosis() {
+		return diagnosis;
+	}
+
+
+	public void setDiagnosis(String diagnosis) {
+		this.diagnosis = diagnosis;
+	}
+
+
 
 	public void setIdCard(String idCard) {
 		this.idCard = idCard;
