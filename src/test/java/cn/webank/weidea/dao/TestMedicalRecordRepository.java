@@ -24,7 +24,7 @@ public class TestMedicalRecordRepository {
 			String time = String.valueOf(System.currentTimeMillis());
 			MedicalRecord medicalRecord = new MedicalRecord(time, time, time, time, time, time, time);
 			medicalRecordRepository.save(medicalRecord);
-
+			System.out.println(count);
 			Assert.assertEquals(count, medicalRecordRepository.count());
 			assertNotNull(medicalRecordRepository.findByIndex(count));
 		} catch (Exception e) {

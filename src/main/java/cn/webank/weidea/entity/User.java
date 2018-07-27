@@ -1,7 +1,5 @@
 package cn.webank.weidea.entity;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-
 public class User {
 	private String idCard;
 	private String username;

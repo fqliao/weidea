@@ -26,9 +26,8 @@ public class TestUserRepository {
 			String name = userRepository.findPublishKey(idCard);
 			Assert.assertEquals(idCard + "bb", name);
 		} catch (Exception e) {
+			e.printStackTrace();
 			Assert.fail();
 		}
-		System.out.println("success");
-		System.exit(0);
 	}
 }
