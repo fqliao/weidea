@@ -1,11 +1,14 @@
 package cn.webank.weidea.dao;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
 import org.bcos.channel.client.Service;
+import org.bcos.web3j.abi.datatypes.Type;
 import org.bcos.web3j.abi.datatypes.Utf8String;
+import org.bcos.web3j.abi.datatypes.generated.Uint256;
 import org.bcos.web3j.abi.datatypes.generated.Uint8;
 import org.bcos.web3j.crypto.Credentials;
 import org.bcos.web3j.crypto.ECKeyPair;
@@ -72,6 +75,33 @@ public class UserRepository {
 		try {
 			kcy.register(new Utf8String(user.getIdCard()), new Utf8String(user.getUsername()),
 					new Utf8String(user.getPhone()), new Utf8String(user.getToken()), new Uint8(user.getSex())).get();
+		} catch (Exception e) {
+			throw new BlockChainException(e);
+		}
+	}
+
+	public int count() {
+		Kyc kcy = getKcy();
+		try {
+			return kcy.numPerson().get().getValue().intValue();
+		} catch (Exception e) {
+			throw new BlockChainException(e);
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	public User findByIndex(int index) {
+		Kyc kcy = getKcy();
+		try {
+			User user = new User();
+			List<Type> list = kcy.persons(new Uint256(index)).get();
+			user.setIdCard(list.get(0).getValue().toString());
+			user.setPublishKey(list.get(1).getValue().toString());
+			user.setUsername(list.get(2).getValue().toString());
+			user.setPhone(list.get(3).getValue().toString());
+			user.setToken(list.get(4).getValue().toString());
+			user.setSex(Integer.valueOf(list.get(5).getValue().toString()));
+			return user;
 		} catch (Exception e) {
 			throw new BlockChainException(e);
 		}

@@ -5,6 +5,16 @@ public class Result<T> {
 	private T data;
 	private String errorMsg;
 
+	public Result() {
+	}
+
+	public Result(int code, T data, String errorMsg) {
+		super();
+		this.code = code;
+		this.data = data;
+		this.errorMsg = errorMsg;
+	}
+
 	public int getCode() {
 		return code;
 	}
