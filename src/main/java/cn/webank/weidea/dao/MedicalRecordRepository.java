@@ -2,7 +2,6 @@ package cn.webank.weidea.dao;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.concurrent.Future;
 
 import javax.annotation.PostConstruct;
 
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Repository;
 
 import cn.webank.weidea.dao.exception.BlockChainException;
 import cn.webank.weidea.entity.MedicalRecord;
-import cn.webank.weidea.mcc.Kyc;
 import cn.webank.weidea.mcc.Record;
 
 @Repository
@@ -89,4 +87,17 @@ public class MedicalRecordRepository {
 			throw new BlockChainException(e);
 		}
 	}
+
+	public void save(MedicalRecord medicalRecord) {
+		Record record = getRecord();
+		try {
+			record.saveMedicalRecord(new Utf8String(medicalRecord.getIdCard()),
+					new Utf8String(medicalRecord.getHospital()), new Utf8String(medicalRecord.getCategory()),
+					new Utf8String(medicalRecord.getItem()), new Utf8String(medicalRecord.getDiagnosis()),
+					new Utf8String(medicalRecord.getProposal()), new Utf8String(medicalRecord.getDate()));
+		} catch (Exception e) {
+			throw new BlockChainException(e);
+		}
+	}
+
 }
