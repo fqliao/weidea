@@ -30,5 +30,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/web3sdk.jar"/>
+	<classpathentry kind="lib" path="F:/安装包/org.springframework.orm-3.2.5.RELEASE.jar"/>
 	<classpathentry kind="output" path="output/classes"/>
 </classpath>

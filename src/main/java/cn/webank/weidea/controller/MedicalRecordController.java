@@ -36,7 +36,7 @@ public class MedicalRecordController {
 		SearchMedicalRecordReq searchMedicalRecordReq = new SearchMedicalRecordReq();
 		searchMedicalRecordReq = request.fromJson(requestBody,SearchMedicalRecordReq.class);
 		
-		
+		System.out.println(searchMedicalRecordReq.getStartTime());
 		
 		
 		return response;
