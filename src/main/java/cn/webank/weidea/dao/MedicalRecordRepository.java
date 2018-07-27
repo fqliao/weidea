@@ -88,7 +88,7 @@ public class MedicalRecordRepository {
 			MedicalRecord medicalRecord = new MedicalRecord();
 			List<Type> list = record.records(new Uint256(index)).get();
 			medicalRecord.setIdCard(list.get(0).getValue().toString());
-			medicalRecord.setHospital(list.get(1).getValue().toString());
+			medicalRecord.setHospitalAndDoctor(list.get(1).getValue().toString());
 			medicalRecord.setCategory(list.get(2).getValue().toString());
 			medicalRecord.setItem(list.get(3).getValue().toString());
 			medicalRecord.setDiagnosis(list.get(4).getValue().toString());
@@ -104,7 +104,7 @@ public class MedicalRecordRepository {
 		Record record = getRecord();
 		try {
 			record.saveMedicalRecord(new Utf8String(medicalRecord.getIdCard()),
-					new Utf8String(medicalRecord.getHospital()), new Utf8String(medicalRecord.getCategory()),
+					new Utf8String(medicalRecord.getHospitalAndDoctor()), new Utf8String(medicalRecord.getCategory()),
 					new Utf8String(medicalRecord.getItem()), new Utf8String(medicalRecord.getDiagnosis()),
 					new Utf8String(medicalRecord.getProposal()), new Utf8String(medicalRecord.getDate())).get();
 		} catch (Exception e) {
