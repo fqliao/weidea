@@ -38,11 +38,11 @@ public class RegisterService {
 				return true;
 			}
 			
-		}catch(CheckException ce) {
+		}catch(CheckException ce) {			
 			ce.printStackTrace();
-		}finally {
 			return false;
-		}		
+		}
+		return false;
 	}
 	
 	private String getPulibcKeyFromPKI(String idCard) {
