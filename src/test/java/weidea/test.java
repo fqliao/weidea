@@ -69,16 +69,17 @@ public class test {
 		// 调用合约接口
 		java.math.BigInteger Num = new BigInteger("999");
 		Uint256 num = new Uint256(Num);
-		TransactionReceipt receipt = ok.register(new Utf8String("aaaaa"), new Utf8String("aaaaa1"),
-				new Utf8String("aaaaa2"), new Utf8String("aaaaa3"), new Uint8(1)).get();
+		// TransactionReceipt receipt = ok.register(new Utf8String("aaaaa"), new
+		// Utf8String("aaaaa1"),
+		// new Utf8String("aaaaa2"), new Utf8String("aaaaa3"), new Uint8(1)).get();
 		// TransactionReceipt receipt = ok.trans(num).get();
-		System.out.println("receipt transactionHash" + receipt.getTransactionHash());
+		// System.out.println("receipt transactionHash" + receipt.getTransactionHash());
 
 		// 查询合约数据
 		// num = ok.get().get();
 		System.out.println("ok.get() " + num.getValue());
-		Future<Utf8String> future = ok.get(new Utf8String("aaaaacc"));
-		System.out.println("---" + future.get());
+		// FutuCre<Utf8String> future = ok.get(new Utf8String("aaaaacc"));
+		// System.out.println("---" + future.get());
 	}
 
 	// public static void main1(String[] args) {

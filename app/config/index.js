@@ -13,6 +13,7 @@ module.exports = {
     proxyTable: {
         '/api': {
             target: 'http://localhost:3002',
+            // target: 'http://192.168.43.39:8080',
             changeOrigin: true,
             pathRewrite: {
               '^/api': ''
@@ -63,7 +64,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
 
     /**
      * Source Maps

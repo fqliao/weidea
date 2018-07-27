@@ -1,15 +1,37 @@
 package cn.webank.weidea.dao.exception;
 
+import cn.webank.weidea.model.Result;
+import cn.webank.weidea.util.CodeUtil;
+
 public class CheckException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
+	@SuppressWarnings({ "rawtypes" })
+	private Result result;
 
-	public CheckException() {
-		super();
+	public CheckException(String errorMsg) {
+		Result<String> result = new Result<>();
+		result.setErrorMsg(errorMsg);
+		result.setCode(CodeUtil.CHECK_ERROR);
+		this.result = result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public CheckException(Result result) {
+		this.result = result;
 	}
 
 	public CheckException(Throwable arg0) {
 		super(arg0);
+	}
+
+	@SuppressWarnings("rawtypes")
+	public Result getResult() {
+		return result;
+	}
+
+	public void setResult(@SuppressWarnings("rawtypes") Result result) {
+		this.result = result;
 	}
 
 }

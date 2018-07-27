@@ -25,7 +25,7 @@ import cn.webank.weidea.entity.User;
 public class MedicalRecordController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MedicalRecordController.class);
 	
-	@RequestMapping(value="/record",method=RequestMethod.POST)
+	@RequestMapping(value="api/record",method=RequestMethod.POST)
 	public @ResponseBody Gson searchMedicalRecord(
 			@RequestBody String requestBody,
 			HttpServletRequest httpRequest,
@@ -42,7 +42,7 @@ public class MedicalRecordController {
 		return response;
 	}
 	
-	@RequestMapping(value="/saveRecord",method=RequestMethod.POST)
+	@RequestMapping(value="api/saveRecord",method=RequestMethod.POST)
 	public @ResponseBody Gson saveMedicalRecord(
 			@RequestBody String requestBody,
 			HttpServletRequest httpRequest,
@@ -58,7 +58,6 @@ public class MedicalRecordController {
 		hospital.setOrganizationCodeNumber(saveMedicalRecordReq.getHospital());
 		User user = new User();
 		user.setIdCard(saveMedicalRecordReq.getIdCard());
-		
 		
 		return response;
 	}
