@@ -12,6 +12,8 @@ import org.bcos.web3j.crypto.ECKeyPair;
 import org.bcos.web3j.crypto.Keys;
 import org.bcos.web3j.protocol.Web3j;
 import org.bcos.web3j.protocol.channel.ChannelEthereumService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -27,10 +29,12 @@ public class MedicalRecordRepository {
 	@Autowired
 	private ContractAddressRepository contractAddressRepository;
 	private Record record;
+	private static final Logger LOGGER = LoggerFactory.getLogger(MedicalRecordRepository.class);
 
 	private Record getRecord() {
 		if (record == null) {
 			try {
+				LOGGER.info("record is empty,beginning generate");
 				service.run();
 				ChannelEthereumService channelEthereumService = new ChannelEthereumService();
 				channelEthereumService.setChannelService(service);
@@ -46,13 +50,17 @@ public class MedicalRecordRepository {
 				java.math.BigInteger gasPrice = new BigInteger("30000000");
 				java.math.BigInteger gasLimit = new BigInteger("30000000");
 				java.math.BigInteger initialWeiValue = new BigInteger("0");
+
+				LOGGER.info("beginning get the record");
 				// 部署合约
 				String contractAddress = contractAddressRepository.findAddressByCategory(Record.class.getName());
 				if (contractAddress == null) {
+					LOGGER.info("first get the record,deploy record");
 					this.record = Record.deploy(web3, credentials, gasPrice, gasLimit, initialWeiValue).get();
 					contractAddressRepository
 							.save(new ContractAddress(record.getContractAddress(), Record.class.getName()));
 				} else {
+					LOGGER.info("contractAddress is exist,so load the record ");
 					this.record = Record.load(contractAddress, web3, credentials, gasPrice, gasLimit);
 				}
 			} catch (Exception e) {
@@ -91,6 +99,7 @@ public class MedicalRecordRepository {
 	}
 
 	public void save(MedicalRecord medicalRecord) {
+		LOGGER.debug("medicalRecord save the medicalRecord:" + medicalRecord.toString());
 		Record record = getRecord();
 		try {
 			record.saveMedicalRecord(new Utf8String(medicalRecord.getIdCard()),
