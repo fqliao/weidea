@@ -116,14 +116,14 @@ public class MedicalRecordController {
 
 	@RequestMapping(value = "api/onerecord", method = RequestMethod.POST)
 	@ResponseBody
-	public String getByIndex(@RequestBody String requestBody, HttpSession session) {
+	public MedicalRecord getByIndex(@RequestBody String requestBody, HttpSession session) {
 		RecordRequest recordRequest = new Gson().fromJson(requestBody, RecordRequest.class);
 		if (session.getAttribute("user") != null) {
 			User user = (User) session.getAttribute("user");
 			recordRequest.setIdCard(user.getIdCard());
 			recordRequest.setPassword(user.getToken());
 		}
-		return new Gson().toJson(recordService.getRecord(recordRequest));
+		return recordService.getRecord(recordRequest);
 	}
 
 }
