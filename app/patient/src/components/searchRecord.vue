@@ -105,13 +105,13 @@ export default {
       this.openDetail = false
     },
     showItem(index) {
-      const form = this.form
+      const userInfo = this.getData('userInfo')
       let head = {
         index: index,
-        idCard: form['idCard'],
-        password: form['password']
+        idCard: userInfo['idCard'],
+        password: userInfo['password']
       }
-      this.$http.get('api/onerecord').then(res => {
+      this.$http.post('api/onerecord', userInfo).then(res => {
         this.record = res.body
         this.openDetail = true
       })
