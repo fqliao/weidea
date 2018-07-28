@@ -4,7 +4,7 @@ contract Record{
     
     struct MedicalRecord{
         string idCard;
-        string hospital;
+        string hospital_doctor;
         string category;
         string item;
         string diagnosis;
@@ -12,30 +12,23 @@ contract Record{
         string date;
     }
     uint public numRecord = 0;
+    string recordHash;
     MedicalRecord[] public records;
     
-    function saveMedicalRecord(string idCard, string hospital, string category, string item,
-      string diagnosis, string proposal,  string date) returns (bool)
+    function saveMedicalRecord(string _idCard, string _hospital_doctor, string _category, string _item,
+      string _diagnosis, string _proposal, string _date)
     {
         records.push(MedicalRecord(
-            { idCard: idCard,
-              hospital: hospital,
-              category: category,
-              item: item,
-              proposal: proposal,
-              diagnosis: diagnosis,
-              date:date
+            {
+                idCard: _idCard, 
+                hospital_doctor: _hospital_doctor, 
+                category: _category, 
+                item: _item, 
+                proposal: _proposal, 
+                diagnosis: _diagnosis, 
+                date: _date
             }));
         numRecord = numRecord + 1;
-        return true;
-    }
-/*
-    function get() constant returns (uint)
-    {
-        
-        return numRecord;
-    }
-*/
-    
+    } 
 
 }
