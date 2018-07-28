@@ -111,7 +111,7 @@ export default {
         idCard: userInfo['idCard'],
         password: userInfo['password']
       }
-      this.$http.post('api/onerecord', userInfo).then(res => {
+      this.$http.post('api/onerecord', head).then(res => {
         this.record = res.body
         this.openDetail = true
       })
