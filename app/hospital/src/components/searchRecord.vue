@@ -80,7 +80,7 @@
           </mu-list-item-action>
           <mu-list-item-content class="recorditem">
           	<span>处方：</span>
-            <span>{{record.prescription}}</span>
+            <span>{{record.diagnosis}}</span>
           </mu-list-item-content>
         </mu-list-item>
       </mu-list>
@@ -200,5 +200,4 @@ export default {
 .dialog-item {
 	margin: .5rem 0;
 }
-	
 </style>

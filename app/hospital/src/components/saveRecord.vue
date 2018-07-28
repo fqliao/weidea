@@ -14,8 +14,8 @@
       <mu-form-item label="诊断结果" help-text="" :rules="proposalRules" prop="proposal">
         <mu-text-field v-model="form.proposal" prop="proposal"></mu-text-field>
       </mu-form-item>
-      <mu-form-item label="处方" help-text="" :rules="prescriptionRules" prop="prescription">
-        <mu-text-field v-model="form.prescription" prop="prescription"></mu-text-field>
+      <mu-form-item label="处方" help-text="" :rules="diagnosisRules" prop="diagnosis">
+        <mu-text-field v-model="form.diagnosis" prop="diagnosis"></mu-text-field>
       </mu-form-item>
       <mu-form-item label="记录日期" help-text="" :rules="dateRules" prop="date">
         <mu-date-input v-model="form.date" label-float full-width prop="date"></mu-date-input>
@@ -45,7 +45,7 @@ export default {
       openDialog: false,
       form: {
         idCard: '',
-        prescription: '',
+        diagnosis: '',
         item: '',
         category: '',
         proposal: '',
@@ -64,7 +64,7 @@ export default {
       proposalRules: [{
         validate: (val) => val.length > 0, message: '诊断结果为必填项'
       }],
-      prescriptionRules: [{
+      diagnosisRules: [{
         validate: (val) => val.length > 0, message: '处方为必填项'
       }],
       dateRules: [{

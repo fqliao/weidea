@@ -1,9 +1,9 @@
 <template>
 <div class="header" v-show="headerShow">
 	<mu-appbar class="header-contain" color="primary">
-    <mu-avatar color="teal" slot="left" @click="goIndex">
+    <!-- <mu-avatar color="teal" slot="left" @click="goIndex">
     	<img src="../../static/logo.png">
-  	</mu-avatar>
+  	</mu-avatar> -->
 	  <p @click="goIndex">医链云</p>
 	  <mu-flex slot="right">
 	  	<p class="header-user">{{user}}</p>

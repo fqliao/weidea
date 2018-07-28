@@ -3,52 +3,60 @@
   <mu-flex justify-content="center">
     <img src="../../static/logo.png" class="logo">
   </mu-flex>
-  <mu-flex justify-content="center" class="form" v-if="logShow">
-    <mu-form :model="login" ref="login">
-      <mu-form-item icon="chrome_reader_mode" help-text='' :rules="idRules" prop="idCard">
-        <mu-text-field v-model="login.idCard" prop="idCard" placeholder="身份证号"></mu-text-field>
-      </mu-form-item>
-      <mu-form-item icon="person" help-text='' :rules="nameRules" prop="name">
-        <mu-text-field v-model="login.name" prop="name" placeholder="姓名"></mu-text-field>
-      </mu-form-item>
-      <mu-form-item icon="lock" help-text='' :rules="passwordRules" prop="password">
-        <mu-text-field v-model="login.password" prop="password" type="password" placeholder="密码"></mu-text-field>
-      </mu-form-item>
-      <mu-form-item class="btn">
-        <mu-button full-width color="primary" @click="loginFn">登陆</mu-button>
-      </mu-form-item>
-      <mu-form-item class="btn">
-        <mu-button full-width @click="goRegister">注册</mu-button>
-      </mu-form-item>
-    </mu-form>
-  </mu-flex>
-  <mu-flex justify-content="center" class="form" v-else>
-    <mu-form :model="register" ref="register">
-      <mu-form-item icon="person" help-text="" :rules="nameRules" prop="name">
-        <mu-text-field v-model="register.name" prop="name" placeholder="姓名"></mu-text-field>
-      </mu-form-item>
-      <mu-form-item icon="chrome_reader_mode" help-text="" :rules="idRules" prop="idCard">
-        <mu-text-field v-model="register.idCard" prop="idCard" placeholder="身份证号"></mu-text-field>
-      </mu-form-item>
-      <mu-form-item icon="phone" help-text="" :rules="phoneRules" prop="phone">
-        <mu-text-field v-model="register.phone" prop="phone" placeholder="手机号"></mu-text-field>
-      </mu-form-item>
-      <mu-form-item icon="lock" help-text="" :rules="passwordRules" prop="password">
-        <mu-text-field v-model="register.password" type="password" prop="password" placeholder="密码"></mu-text-field>
-      </mu-form-item>
-      <mu-form-item>
-        <mu-flex justify-content="center" class="select-control-row" :key="'radio ' + i" v-for="(i, item) in sexArr">
-          <mu-radio :value="item" v-model="register.sex"  :label="i"></mu-radio>
-        </mu-flex>
-      </mu-form-item>
-      <mu-form-item class="btn">
-        <mu-button full-width color="primary" @click="submit">提交</mu-button>
-      </mu-form-item>
-      <mu-form-item class="btn">
-        <mu-button full-width @click="goLogin">登陆</mu-button>
-      </mu-form-item>
-    </mu-form>
-  </mu-flex>
+  <mu-slide-left-transition mode="in-out">
+    <mu-container v-show="logShow">
+      <mu-flex justify-content="center" class="form">
+        <mu-form :model="login" ref="login">
+          <mu-form-item icon="chrome_reader_mode" help-text='' :rules="idRules" prop="idCard">
+            <mu-text-field v-model="login.idCard" prop="idCard" placeholder="身份证号"></mu-text-field>
+          </mu-form-item>
+          <mu-form-item icon="person" help-text='' :rules="nameRules" prop="name">
+            <mu-text-field v-model="login.name" prop="name" placeholder="姓名"></mu-text-field>
+          </mu-form-item>
+          <mu-form-item icon="lock" help-text='' :rules="passwordRules" prop="password">
+            <mu-text-field v-model="login.password" prop="password" type="password" placeholder="密码"></mu-text-field>
+          </mu-form-item>
+          <mu-form-item class="btn">
+            <mu-button full-width color="primary" @click="loginFn">登陆</mu-button>
+          </mu-form-item>
+          <mu-form-item class="btn">
+            <mu-button full-width @click="goRegister">注册</mu-button>
+          </mu-form-item>
+        </mu-form>
+      </mu-flex>
+    </mu-container>
+  </mu-slide-left-transition>
+  <mu-slide-right-transition mode="out-in">
+    <mu-container v-show="regShow">
+      <mu-flex justify-content="center" class="form">
+        <mu-form :model="register" ref="register">
+          <mu-form-item icon="person" help-text="" :rules="nameRules" prop="name">
+            <mu-text-field v-model="register.name" prop="name" placeholder="姓名"></mu-text-field>
+          </mu-form-item>
+          <mu-form-item icon="chrome_reader_mode" help-text="" :rules="idRules" prop="idCard">
+            <mu-text-field v-model="register.idCard" prop="idCard" placeholder="身份证号"></mu-text-field>
+          </mu-form-item>
+          <mu-form-item icon="phone" help-text="" :rules="phoneRules" prop="phone">
+            <mu-text-field v-model="register.phone" prop="phone" placeholder="手机号"></mu-text-field>
+          </mu-form-item>
+          <mu-form-item icon="lock" help-text="" :rules="passwordRules" prop="password">
+            <mu-text-field v-model="register.password" type="password" prop="password" placeholder="密码"></mu-text-field>
+          </mu-form-item>
+          <mu-form-item>
+            <mu-flex justify-content="center" class="select-control-row" :key="'radio ' + i" v-for="(i, item) in sexArr">
+              <mu-radio :value="item" v-model="register.sex"  :label="i"></mu-radio>
+            </mu-flex>
+          </mu-form-item>
+          <mu-form-item class="btn">
+            <mu-button full-width color="primary" @click="submit">提交</mu-button>
+          </mu-form-item>
+          <mu-form-item class="btn">
+            <mu-button full-width @click="goLogin">登陆</mu-button>
+          </mu-form-item>
+        </mu-form>
+      </mu-flex>
+    </mu-container>
+  </mu-slide-right-transition>
   <!-- alert -->
   <mu-alert class="alert" :color="alertColor" @delete="alertShow = false" delete v-if="alertShow" transition="mu-scale-transition">
     <mu-icon left :value.sync="alertIcon"></mu-icon>{{alertText}}
@@ -64,6 +72,7 @@ export default {
 	data() {
 		return {
       logShow: true,
+      regShow: false,
       alertColor: '',
       alertShow: false,
       alertIcon: '',
@@ -125,10 +134,16 @@ export default {
       
     },
     goRegister() {
-      this.logShow = false
+      this.logShow = false,
+      setTimeout(() => {
+        this.regShow = true
+      }, 500)
     },
     goLogin() {
-      this.logShow = true
+      this.regShow = false
+      setTimeout(() => {
+        this.logShow = true
+      }, 500)
     },
     registerFn(head) {
       this.$http.post('api/register', head).then(res => {
