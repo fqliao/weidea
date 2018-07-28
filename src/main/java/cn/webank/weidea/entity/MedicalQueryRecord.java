@@ -1,9 +1,10 @@
 package cn.webank.weidea.entity;
 
+import java.util.List;
+
 public class MedicalQueryRecord {
 	private String idCard;
 	private String hospitalAndDoctor;
-	private String recordHash;
 	private String date;
 	private int index;
 
@@ -23,14 +24,6 @@ public class MedicalQueryRecord {
 		this.hospitalAndDoctor = hospitalAndDoctor;
 	}
 
-	public String getRecordHash() {
-		return recordHash;
-	}
-
-	public void setRecordHash(String recordHash) {
-		this.recordHash = recordHash;
-	}
-
 	public String getDate() {
 		return date;
 	}
@@ -45,5 +38,11 @@ public class MedicalQueryRecord {
 
 	public void setIndex(int index) {
 		this.index = index;
+	}
+
+	@Override
+	public String toString() {
+		return "MedicalQueryRecord [idCard=" + idCard + ", hospitalAndDoctor=" + hospitalAndDoctor + ", date=" + date
+				+ ", index=" + index + "]";
 	}
 }

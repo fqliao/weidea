@@ -12,6 +12,9 @@ public class SearchMedicalRecordReq {
 	 * category: String,
 	 * password: String
 	 * */
+	@JsonProperty(value="hospital")
+	private String hospital;
+	
 	@JsonProperty(value = "idCard")
 	private String idCard;
 	
@@ -65,6 +68,14 @@ public class SearchMedicalRecordReq {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}	
+
+	public String getHospital() {
+		return hospital;
+	}
+
+	public void setHospital(String hospital) {
+		this.hospital = hospital;
 	}
 
 	@Override

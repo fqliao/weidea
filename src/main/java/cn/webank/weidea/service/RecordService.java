@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.webank.weidea.dao.MedicalRecordRepository;
+import cn.webank.weidea.dao.QueryRecordRepository;
 import cn.webank.weidea.dto.SaveMedicalRecordReq;
 import cn.webank.weidea.dto.SearchMedicalRecordReq;
+import cn.webank.weidea.entity.MedicalQueryRecord;
 import cn.webank.weidea.entity.MedicalRecord;
 
 @Service
@@ -21,6 +23,9 @@ public class RecordService {
 	
 	@Autowired
 	MedicalRecordRepository medicalRecordRepository;
+	
+	@Autowired
+	QueryRecordRepository queryRecordRepository;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(RecordService.class);
 	
@@ -49,13 +54,25 @@ public class RecordService {
 			MedicalRecord mr=medicalRecordRepository.findByIndex(i);
 			LOGGER.info("处理就诊记录："+mr.toString());
 			if(filterRecordByCondition(searchMedicalRecordReq,mr)) {
-				records.add(mr);
-				
-				//增加查询记录
-				
+				records.add(mr);	
+				addQueryRecord(searchMedicalRecordReq,i);
 			}
 		}
+		
 		return records;		
+	}
+	
+	private void addQueryRecord(SearchMedicalRecordReq searchMedicalRecordReq,int index){
+		MedicalQueryRecord mqr=new MedicalQueryRecord();
+		mqr.setIdCard(searchMedicalRecordReq.getIdCard());
+		//mqr.setHospitalAndDoctor(searchMedicalRecordReq.getHospital());
+		mqr.setHospitalAndDoctor("hospitalAndDoctor");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String date=df.format(new Date());
+		mqr.setDate(date);
+		mqr.setIndex(index);		
+		queryRecordRepository.save(mqr);
+		LOGGER.info("=====写入医生查询记录："+mqr.toString()+"=====");
 	}
 	
 	boolean filterRecordByCondition(SearchMedicalRecordReq smr,MedicalRecord record){
@@ -63,7 +80,7 @@ public class RecordService {
 			return false;
 		//校验token--LULU
 		
-		if(smr.getStartTime()!=null&&smr.getEndTime()!=null) {
+		/*if(smr.getStartTime()!=null&&smr.getEndTime()!=null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String startdate = sdf.format(smr.getStartTime());
 			String enddate=sdf.format(smr.getEndTime());
@@ -72,7 +89,7 @@ public class RecordService {
 				return false;		
 		}
 		if(record.getCategory()!=null && !record.getCategory().equals(smr.getCategory()))
-			return false;			
+			return false;*/		
 		return true;
 	}
 	
@@ -100,7 +117,7 @@ public class RecordService {
 	}
 	
 	private int compare_date(String DATE1, String DATE2) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date dt1 = df.parse(DATE1);
             Date dt2 = df.parse(DATE2);

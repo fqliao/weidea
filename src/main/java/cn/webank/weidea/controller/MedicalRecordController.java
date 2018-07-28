@@ -3,7 +3,9 @@ package cn.webank.weidea.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,9 +21,12 @@ import com.google.gson.Gson;
 
 import cn.webank.weidea.dto.SaveMedicalRecordReq;
 import cn.webank.weidea.dto.SearchMedicalRecordReq;
+import cn.webank.weidea.dto.SearchQueryRecordReq;
 import cn.webank.weidea.entity.Hospital;
+import cn.webank.weidea.entity.MedicalQueryRecord;
 import cn.webank.weidea.entity.MedicalRecord;
 import cn.webank.weidea.entity.User;
+import cn.webank.weidea.service.QueryService;
 import cn.webank.weidea.service.RecordService;
 
 @Controller
@@ -30,14 +35,16 @@ public class MedicalRecordController {
 	@Autowired
 	RecordService recordService;
 	
+	@Autowired
+	QueryService queryService;
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(MedicalRecordController.class);
 	
 	@RequestMapping(value="api/record",method=RequestMethod.POST)
-	public @ResponseBody Gson searchMedicalRecord(
+	public  @ResponseBody Map<String,List<MedicalRecord>> searchMedicalRecord(
 			@RequestBody String requestBody,
 			HttpServletRequest httpRequest,
 			HttpServletResponse httpResponse) {
-		Gson response = new Gson();
 		//获取前端提交的信息
 		Gson request = new Gson();
 		SearchMedicalRecordReq searchMedicalRecordReq = new SearchMedicalRecordReq();
@@ -53,7 +60,13 @@ public class MedicalRecordController {
 			LOGGER.info("===========查询到就诊记录： "+mr.toString()+"==============");
 		}	
 		
-		return response;
+		/*String Response = response.toJson(mrs);
+		LOGGER.info("============"+Response+"========");
+		
+		return Response;*/
+		Map<String,List<MedicalRecord>> result=new HashMap();
+		result.put("medicalRecords", mrs);
+		return result;
 	}
 	
 	@ResponseBody
@@ -77,11 +90,28 @@ public class MedicalRecordController {
 		return recordService.savaRecord(saveMedicalRecordReq);
 	}
 	
-	public static void main(String[] args) {
-		String requestBody = "{'category':'530421199612070260','item':'HX99665780'}";
-		Gson testInfo = new Gson();
-		MedicalRecord test = testInfo.fromJson(requestBody, MedicalRecord.class);
-		System.out.println(test.getCategory()+test.getItem());
+	
+	@RequestMapping(value="api/searchRecord",method=RequestMethod.POST)
+	public @ResponseBody Map<String,List<MedicalQueryRecord>> searchQueryRecord(
+			@RequestBody String requestBody) {
+		
+		Gson requestJson = new Gson();		
+		SearchQueryRecordReq searchQueryRecordReq = new SearchQueryRecordReq();
+		searchQueryRecordReq = requestJson.fromJson(requestBody,SearchQueryRecordReq.class);		
+		LOGGER.info("========获取到查询条件："+searchQueryRecordReq.toString()+"========");
+		
+		LOGGER.info("==========开始查询医生记录===========");
+		List<MedicalQueryRecord> mrs=queryService.getqueryRecord(searchQueryRecordReq);	
+		
+		LOGGER.info("医生查询记录为：");
+		for(MedicalQueryRecord re: mrs) {
+			LOGGER.info("======获取到医生查询记录："+re.toString());
+		}
+		
+		Map<String,List<MedicalQueryRecord>> result=new HashMap();		
+		result.put("infos", mrs);		
+		return result;	
 	}
+	
 	
 }

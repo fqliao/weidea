@@ -79,7 +79,6 @@ public class QueryRecordRepository {
 			MedicalQueryRecord medicalQueryRecord = new MedicalQueryRecord();
 			medicalQueryRecord.setIdCard(list.get(0).getValue().toString());
 			medicalQueryRecord.setHospitalAndDoctor(list.get(1).getValue().toString());
-			medicalQueryRecord.setRecordHash(list.get(0).getValue().toString());
 			medicalQueryRecord.setDate((list.get(0).getValue().toString()));
 			return medicalQueryRecord;
 		} catch (Exception e) {
