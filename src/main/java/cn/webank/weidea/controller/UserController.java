@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import cn.webank.weidea.entity.User;
-import cn.webank.weidea.model.LoginReq;
+import cn.webank.weidea.model.LoginRequest;
 import cn.webank.weidea.model.Result;
 import cn.webank.weidea.service.UserService;
 
@@ -37,7 +37,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "api/login", method = RequestMethod.POST)
 	public boolean login(@RequestBody String requestBody, HttpSession session) {
-		LoginReq loginReq = new Gson().fromJson(requestBody, LoginReq.class);
+		LoginRequest loginReq = new Gson().fromJson(requestBody, LoginRequest.class);
 
 		User user = new User();
 		user.setIdCard(loginReq.getIdCard());

@@ -1,6 +1,6 @@
 package cn.webank.weidea.model;
 
-public class LoginReq {
+public class LoginRequest {
 	private String idCard;
 	private String name;
 	private String password;
