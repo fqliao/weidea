@@ -31,8 +31,9 @@ public class RegisterService {
 			user.setPublishKey(pkey);
 			User encryptUser = new User();
 			// 加密
-			encryptUser.setUsername(new EncryptUtils().Encrypt(user.getPublishKey(), user.getUsername()));
-			encryptUser.setPhone(new EncryptUtils().Encrypt(user.getPublishKey(), user.getPhone()));
+			EncryptUtils encryptUtils = new EncryptUtils();
+			encryptUser.setUsername(encryptUtils.Encrypt(user.getPublishKey(), user.getUsername()));
+			encryptUser.setPhone(encryptUtils.Encrypt(user.getPublishKey(), user.getPhone()));
 			encryptUser.setIdCard(user.getIdCard());
 			encryptUser.setPublishKey(user.getPublishKey());
 			encryptUser.setSex(user.getSex());
