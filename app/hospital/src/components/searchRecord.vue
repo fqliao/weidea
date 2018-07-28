@@ -178,8 +178,7 @@ export default {
         idCard: form['idCard'],
         password: form['password']
       }
-      console.log(head)
-    	this.$http.post('/api/onerecord', head).then(res => {
+    	this.$http.post('api/onerecord', head).then(res => {
     		this.record = res.body
     		this.openDetail = true
     	})
