@@ -3,20 +3,24 @@
 	<div class="search">
 		<mu-slide-left-transition mode="in-out">
 		  <mu-container v-show="showOut">
-		    <mu-form :model="form" ref="form">
-		      <mu-form-item label="身份证号" help-text="" :rules="idRules" prop="idCard">
-		        <mu-text-field v-model="form.idCard" prop="idCard"></mu-text-field>
+		    <mu-form :model="form" ref="form" class="form">
+		      <mu-form-item icon="chrome_reader_mode" help-text="" :rules="idRules" prop="idCard">
+		        <mu-text-field v-model="form.idCard" prop="idCard" placeholder="身份证号"></mu-text-field>
 		      </mu-form-item>
-		      <mu-form-item label="起始时间" help-text="" :rules="startRules" prop="startTime">
-		        <mu-date-input v-model="form.startTime" :max-date="form.endTime" label-float full-width prop="startTime"></mu-date-input>
+
+          <div class="date formitem">
+            <mu-form-item icon="today" :rules="startRules" prop="startTime" label="开始时间" class="formdate" :label-float="true">
+              <mu-date-input container="dialog"  v-model="form.startTime" :max-date="form.endTime" label-float full-width prop="startTime"></mu-date-input>
+            </mu-form-item>
+            <mu-form-item icon="today" :rules="endRules" prop="endTime" label="结束时间" class="formdate" :label-float="true">
+              <mu-date-input container="dialog"  v-model="form.endTime" :min-date="form.startTime" label-float full-width prop="endTime"></mu-date-input>
+            </mu-form-item>
+          </div>
+
+		      <mu-form-item icon="lock" help-text="" :rules="passwordRules" prop="password">
+		        <mu-text-field v-model="form.password" type="password" prop="password" placeholder="口令"></mu-text-field>
 		      </mu-form-item>
-		      <mu-form-item label="结束时间" help-text="" :rules="endRules" prop="endTime">
-		        <mu-date-input v-model="form.endTime" :min-date="form.startTime" label-float full-width prop="endTime"></mu-date-input>
-		      </mu-form-item>
-		      <mu-form-item label="口令" help-text="" :rules="passwordRules" prop="password">
-		        <mu-text-field v-model="form.password" type="password" prop="password"></mu-text-field>
-		      </mu-form-item>
-		      <mu-form-item>
+		      <mu-form-item class="submitbtn">
 		        <mu-button color="primary" @click="submit">查询</mu-button>
 		      </mu-form-item>
 		    </mu-form>
@@ -26,6 +30,7 @@
 	<div class="showRecord">
 		<mu-slide-right-transition  mode="out-in">
       <mu-container v-show="showIn">
+        <mu-button class="recordBtn" @click="goRecord">返回</mu-button>
         <mu-paper>
           <mu-data-table border :columns="columns" :sort.sync="sort" @sort-change="handleSortChange" :data.sync="list">
             <template slot-scope="scope">
@@ -40,7 +45,6 @@
             </template>
           </mu-data-table>
         </mu-paper>
-        <mu-button class="recordBtn" @click="goRecord">返回</mu-button>
       </mu-container>
     </mu-slide-right-transition>
 	</div>
@@ -180,7 +184,10 @@ export default {
 
 <style lang = "scss">
 .recordBtn {
-	margin-top: 20px;
+	margin-bottom: 3rem;
+}
+.form {
+  padding: 0 5rem;
 }
 .showItem {
 	cursor: pointer;
@@ -196,6 +203,28 @@ export default {
 		padding-left: 5rem;
 		display: block;
 	} 
+}
+.submitbtn {
+  position: relative;
+  button {
+    position: absolute;
+    right: 0;
+  }
+}
+.searchRecord {
+  .date {
+    display: flex;
+    .formdate {
+      flex: 1;
+    }
+  }
+}
+.btn {
+  position: relative;
+  button {
+    position: absolute;
+    right: 0;
+  }
 }
 .dialog-item {
 	margin: .5rem 0;

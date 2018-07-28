@@ -3,34 +3,28 @@
   <div class="search">
     <mu-slide-left-transition mode="in-out">
       <mu-container v-show="showOut">
-        <mu-form :model="form" ref="form">
-          <mu-form-item label="身份证号" :rules="idRules" prop="idCard">
-            <mu-text-field :rules="idRules" v-model="form.idCard" prop="idCard" ></mu-text-field>
+        <mu-form :model="form" ref="form" class="form">
+          <mu-form-item class="formitem" icon="chrome_reader_mode" :rules="idRules" prop="idCard">
+            <mu-text-field v-model="form.idCard" prop="idCard" placeholder="身份证号"></mu-text-field>
           </mu-form-item>
-
-          <!-- <mu-row gutter>
-            <mu-col span="12" lg="4" sm="6">
-              <mu-date-input icon="today" v-model="form.startTime" :max-date="form.endTime" label="起始时间" container="dialog" label-float full-width></mu-date-input>
-            </mu-col>
-            <mu-col span="12" lg="4" sm="6">
-              <mu-date-input icon="today" v-model="form.endTime" :min-date="form.startTime" label="结束时间" container="dialog" label-float full-width></mu-date-input>
-            </mu-col>
-          </mu-row> -->
           
-          <mu-form-item label="起始时间" :rules="startRules" prop="startTime">
-            <mu-date-input v-model="form.startTime" :max-date="form.endTime" label-float full-width prop="startTime"></mu-date-input>
-          </mu-form-item>
-          <mu-form-item label="结束时间" :rules="endRules" prop="endTime">
-            <mu-date-input v-model="form.endTime" :min-date="form.startTime" label-float full-width prop="endTime"></mu-date-input>
+          <div class="date formitem">
+            <mu-form-item icon="today" :rules="startRules" prop="startTime" label="开始时间" class="formdate" :label-float="true">
+              <mu-date-input container="dialog"  v-model="form.startTime" :max-date="form.endTime" label-float full-width prop="startTime"></mu-date-input>
+            </mu-form-item>
+            <mu-form-item icon="today" :rules="endRules" prop="endTime" label="结束时间" class="formdate" :label-float="true">
+              <mu-date-input container="dialog"  v-model="form.endTime" :min-date="form.startTime" label-float full-width prop="endTime"></mu-date-input>
+            </mu-form-item>
+          </div>
+
+          <mu-form-item class="formitem" icon="library_books" :rules="categoryRules" prop="category">
+            <mu-text-field v-model="form.category" prop="category" placeholder="科室"></mu-text-field>
           </mu-form-item>
 
-          <mu-form-item label="科室" :rules="categoryRules" prop="category">
-            <mu-text-field v-model="form.category" prop="category"></mu-text-field>
+          <mu-form-item class="formitem" icon="lock" :rules="passwordRules" prop="password">
+            <mu-text-field v-model="form.password" type="password" prop="password" placeholder="口令"></mu-text-field>
           </mu-form-item>
-          <mu-form-item label="口令" :rules="passwordRules" prop="password">
-            <mu-text-field v-model="form.password" type="password" prop="password"></mu-text-field>
-          </mu-form-item>
-          <mu-form-item>
+          <mu-form-item class="btn">
             <mu-button color="primary" @click="submit">查询</mu-button>
           </mu-form-item>
         </mu-form>
@@ -40,8 +34,9 @@
   <div class="showRecord">
     <mu-slide-right-transition mode="out-in">
       <mu-container v-show="showIn">
+        <mu-button class="recordBtn" @click="goRecord">返回</mu-button>
         <mu-paper>
-          <mu-data-table :columns="columns" :sort.sync="sort" @sort-change="handleSortChange" :data.sync="list">
+          <mu-data-table border :columns="columns" :sort.sync="sort" @sort-change="handleSortChange" :data.sync="list">
             <template slot-scope="scope">
               <td class="is-center">{{scope.row.date}}</td>
               <td class="is-left">{{scope.row.hospital}}</td>
@@ -52,7 +47,6 @@
             </template>
           </mu-data-table>
         </mu-paper>
-        <mu-button class="recordBtn" @click="goRecord">返回</mu-button>
       </mu-container>
     </mu-slide-right-transition>
   </div>
@@ -95,12 +89,12 @@ export default {
         order: 'desc'
       },
       columns: [
-        { title: '诊断时间', name: 'date', width: 120, sortable: true},
+        { title: '诊断时间', name: 'date', width: 150, sortable: true},
         { title: '医院', name: 'hospital', width: 120},
         { title: '科室', name: 'category', width: 120},
-        { title: '检测项目', name: 'item', width: 180},
+        { title: '检测项目', name: 'item', width: 120},
         { title: '诊断结果', name: 'proposal', width: 250},
-        { title: '处方', name: 'diagnosis', width: 250}
+        { title: '处方', name: 'diagnosis'}
       ]
     }
 	},
@@ -137,7 +131,37 @@ export default {
 </script>
 
 <style lang = "scss">
-.recordBtn {
-  margin-top: 20px;
+.record {
+  .form {
+    padding: 0 5rem;
+  }
+  .formitem {
+    margin: 1rem 0;
+  }
+  .recordBtn {
+    margin-bottom: 3rem;
+  }
+  .date {
+    display: flex;
+    .formdate {
+      flex: 1;
+    }
+  }
+  .mu-table-header {
+    th {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #000;
+    }
+      
+  }
+  .btn {
+    position: relative;
+    button {
+      position: absolute;
+      right: 0;
+    }
+  }
 }
+
 </style>

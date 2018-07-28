@@ -1,6 +1,6 @@
 <template>
 <div class="header" v-show="headerShow">
-	<mu-appbar class="header-contain" color="primary">
+	<mu-appbar color="primary">
     <mu-avatar color="teal" slot="left" @click="goIndex">
     	<img src="../../static/logo.png">
   	</mu-avatar>
@@ -38,12 +38,12 @@ export default {
 }
 </script>
 
-<style>
+<style lang = "scss">
 .header{
 	margin-bottom: 5rem;
-	.header-contain {
+	.mu-appbar {
 		width: 100%;
-		padding: 0 1rem;
+		padding: 0 5rem;
 	}
 	.header-user {
 		font-size: 1.2rem;

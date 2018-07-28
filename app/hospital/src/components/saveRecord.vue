@@ -2,11 +2,11 @@
 <div class="saveRecord">
   <mu-container>
     <mu-form :model="form" ref="form">
-      <mu-form-item label="身份证号" help-text="" :rules="idRules" prop="idCard">
-        <mu-text-field v-model="form.idCard" prop="idCard"></mu-text-field>
+      <mu-form-item icon="chrome_reader_mode" help-text="" :rules="idRules" prop="idCard">
+        <mu-text-field v-model="form.idCard" prop="idCard" placeholder="身份证号"></mu-text-field>
       </mu-form-item>
-      <mu-form-item label="科室" help-text="" :rules="categoryRules" prop="category">
-        <mu-text-field v-model="form.category" prop="category"></mu-text-field>
+      <mu-form-item icon="library_books" help-text="" :rules="categoryRules" prop="category">
+        <mu-text-field v-model="form.category" prop="category" placeholder="科室"></mu-text-field>
       </mu-form-item>
       <mu-form-item label="检测项目" help-text="" :rules="itemRules" prop="item">
         <mu-text-field v-model="form.item" prop="item"></mu-text-field>
