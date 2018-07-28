@@ -20,6 +20,7 @@ import cn.webank.weidea.dto.SearchMedicalRecordReq;
 import cn.webank.weidea.entity.MedicalQueryRecord;
 import cn.webank.weidea.entity.MedicalRecord;
 import cn.webank.weidea.util.EncryptUtils;
+import cn.webank.weidea.util.HttpUtil;
 
 @Service
 public class RecordService {
@@ -30,7 +31,8 @@ public class RecordService {
 	private UserRepository userRepository;
 	@Autowired
 	QueryRecordRepository queryRecordRepository;
-
+	@Autowired
+	private SecretKeyService secretKeyService;
 	private static final Logger LOGGER = LoggerFactory.getLogger(RecordService.class);
 
 	public boolean savaRecord(SaveMedicalRecordReq record) {
@@ -64,12 +66,27 @@ public class RecordService {
 	}
 
 	public List<MedicalRecord> searchRecord(SearchMedicalRecordReq searchMedicalRecordReq) {
-
+		String idCard = searchMedicalRecordReq.getIdCard();
+		String token = searchMedicalRecordReq.getPassword();
+		String publicKey = userRepository.findPublishKey(idCard);
+		if (publicKey == null || publicKey.length() == 0) {
+			throw new CheckException("该身份证未注册");
+		}
 		List<MedicalRecord> records = new ArrayList();
 		int count = medicalRecordRepository.count();
 		LOGGER.info("===========从链上查询到就诊记录共有：" + count + "条");
 		for (int i = 0; i < count; i++) {
-			MedicalRecord mr = medicalRecordRepository.findByIndex(i);
+			MedicalRecord encryptMedicalRecord = medicalRecordRepository.findByIndex(i);
+			MedicalRecord mr = new MedicalRecord();
+			mr.setCategory(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getCategory()));
+			mr.setDiagnosis(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getDiagnosis()));
+			mr.setHospitalAndDoctor(
+					secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getHospitalAndDoctor()));
+			mr.setItem(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getItem()));
+			mr.setProposal(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getProposal()));
+			mr.setDate(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getDate()));
+			mr.setIdCard(idCard);
+
 			LOGGER.info("处理就诊记录：" + mr.toString());
 			if (filterRecordByCondition(searchMedicalRecordReq, mr)) {
 				records.add(mr);
