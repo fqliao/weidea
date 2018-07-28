@@ -19,14 +19,15 @@ public class UserService {
 			.compile("^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$");
 
 	public void register(User user) {
-		if (userRepository.findPublishKey(user.getIdCard()) != null) {
+		String publishKey = userRepository.findPublishKey(user.getIdCard());
+		if (publishKey != null && publishKey.length() > 0) {
 			throw new CheckException("该身份证已存在");
 		}
 		if (!idCardMatcher.matcher(user.getIdCard()).matches()) {
 			throw new CheckException("身份证格式错误");
 		}
 
-		if (user.getSex() != 0 && user.getSex() != 0) {
+		if (user.getSex() != 0 && user.getSex() != 1) {
 			throw new CheckException("性别错误");
 		}
 

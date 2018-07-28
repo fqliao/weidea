@@ -8,11 +8,52 @@
           <td class="is-center">{{scope.row.date}}</td>
           <td class="is-left">{{scope.row.hospital}}</td>
           <td class="is-left">{{scope.row.doctor}}</td>
-          <td class="is-left">{{scope.row.recordHash}}</td>
+          <td class="is-left">
+            <span v-for="(url, index) in scope.row.numRecord">
+              <a class="showItem" @click="showItem(url)">记录{{index+1}}</a>
+            </span>
+          </td>
         </template>
       </mu-data-table>
     </mu-paper>
   </mu-container>
+  <mu-dialog title="记录详情" width="1000" :open.sync="openDetail">
+    <mu-list>
+      <mu-list-item class="dialog-item">
+        <mu-list-item-action>
+          <span>种类：</span>
+        </mu-list-item-action>
+        <mu-list-item-content class="recorditem">
+          <span>{{record.item}}</span>
+        </mu-list-item-content>
+      </mu-list-item>
+      <mu-list-item class="dialog-item">
+        <mu-list-item-action>
+          <span>科室：</span>
+        </mu-list-item-action>
+        <mu-list-item-content class="recorditem">
+          <span>{{record.category}}</span>
+        </mu-list-item-content>
+      </mu-list-item>
+      <mu-list-item class="dialog-item">
+        <mu-list-item-action>
+          <span>病例：</span>
+        </mu-list-item-action>
+        <mu-list-item-content class="recorditem">
+          <span>{{record.proposal}}</span>
+        </mu-list-item-content>
+      </mu-list-item>
+      <mu-list-item class="dialog-item">
+        <mu-list-item-action>
+          <span>处方：</span>
+        </mu-list-item-action>
+        <mu-list-item-content class="recorditem">
+          <span>{{record.prescription}}</span>
+        </mu-list-item-content>
+      </mu-list-item>
+    </mu-list>
+    <mu-button slot="actions" flat color="primary" @click="closeDetail">Close</mu-button>
+  </mu-dialog>
 </div>
 </template>
 
@@ -22,6 +63,8 @@ export default {
 	data() {
 		return {
 			list: [],
+      record: {},
+      openDetail: false,
       sort: {
         date: '',
         order: 'desc'
@@ -30,7 +73,7 @@ export default {
         { title: '诊断时间', name: 'date', width: 120, sortable: true},
         { title: '医院', name: 'hospital', width: 120},
         { title: '医生', name: 'doctor', width: 120},
-        { title: '诊断详情', name: 'recordHash', width: 180}
+        { title: '诊断详情', name: 'numRecord', width: 180}
       ]
     }
 	},
@@ -47,6 +90,7 @@ export default {
         info['hospital'] = hs[0]
         info['doctor'] = hs[1]
       }
+      console.log(infos)
 			this.list = infos
 		})
 	},
@@ -56,7 +100,17 @@ export default {
     },
     goIndex() {
       this.$router.push('/')
-    }
+    },
+    closeDetail() {
+      this.openDetail = false
+    },
+    showItem(url) {
+      // this.$http.get(url).then(res => {
+      this.$http.get('/api/singleRecord').then(res => {
+        this.record = res.body
+        this.openDetail = true
+      })
+    } 
 	}
 }
 </script>
@@ -67,5 +121,12 @@ export default {
   .recordBtn {
     margin: 1rem 0;
   }
+}
+.recordBtn {
+  margin-top: 20px;
+}
+.showItem {
+  cursor: pointer;
+  padding: 0 2px;
 }
 </style>

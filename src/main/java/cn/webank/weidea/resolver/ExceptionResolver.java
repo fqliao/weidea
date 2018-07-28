@@ -40,13 +40,20 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 		if (e instanceof CheckException) {
 			CheckException validateException = (CheckException) e;
 			// writeMsg(response, new Gson().toJson(validateException.getResult()));
-			writeMsg(response, new Gson().toJson(new Result<String>(CodeUtil.UNKNOW_ERROR, null, "检查错误")));
+			LOGGER.debug("检查错误", validateException.getResult().getErrorMsg());
+			// writeMsg(response, new Gson().toJson(validateException.getResult()));
+			writeMsg(response, "false");
+			System.out.println(validateException.getResult().getErrorMsg());
 		} else if (e instanceof BlockChainException) {
-			writeMsg(response, new Gson().toJson(new Result<String>(CodeUtil.UNKNOW_ERROR, null, "区块链错误")));
+			// writeMsg(response, new Gson().toJson(new
+			// Result<String>(CodeUtil.UNKNOW_ERROR, null, "区块链错误")));
 			LOGGER.info("----区块链错误", e);
+			writeMsg(response, "false");
 			e.printStackTrace();
 		} else {
-			writeMsg(response, new Gson().toJson(new Result<String>(CodeUtil.UNKNOW_ERROR, null, "未知错误")));
+			writeMsg(response, "false");
+			// writeMsg(response, new Gson().toJson(new
+			// Result<String>(CodeUtil.UNKNOW_ERROR, null, "未知错误")));
 			LOGGER.info("----未知错误", e);
 			e.printStackTrace();
 

@@ -1,5 +1,7 @@
 package cn.webank.weidea.entity;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 public class User {
 	private String idCard;
 	private String username;
@@ -29,6 +31,15 @@ public class User {
 		this.idCard = idCard;
 	}
 
+	public String getName() {
+		return username;
+	}
+
+	public void setName(String name) {
+		this.username = name;
+	}
+
+	@JsonAlias("name")
 	public String getUsername() {
 		return username;
 	}
@@ -59,6 +70,14 @@ public class User {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public String getPassword() {
+		return token;
+	}
+
+	public void setPassword(String password) {
+		this.token = password;
 	}
 
 	public String getPublishKey() {

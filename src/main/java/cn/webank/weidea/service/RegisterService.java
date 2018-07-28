@@ -9,49 +9,47 @@ import cn.webank.weidea.controller.RegisterController;
 import cn.webank.weidea.dao.UserRepository;
 import cn.webank.weidea.dao.exception.CheckException;
 import cn.webank.weidea.entity.User;
+import cn.webank.weidea.util.EncryptUtils;
 
 @Service
 public class RegisterService {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(RegisterService.class);
-	
+
 	@Autowired
-	UserRepository userRepository;	
+	UserRepository userRepository;
 	@Autowired
 	UserService userService;
-	
-	public boolean register(User user){
+	@Autowired
+	private SecretKeyService secretKeyService;
+
+	public boolean register(User user) {
 		try {
 			varifyUserInfo(user);
-			if(userRepository.findPublishKey(user.getIdCard())==null) {
-				String pkey=getPulibcKeyFromPKI(user.getIdCard());
-				LOGGER.info("从第三方机构获取公钥"+pkey);
-				user.setPublishKey(pkey);
-				//加密
-				
-				//上链
-				userRepository.save(user);
-				LOGGER.info("用户信息密文上链成功");
-				System.out.println("用户信息密文上链成功");
-				
-				//传输口令给第三方
-				return true;
-			}
-			
-		}catch(CheckException ce) {			
+			String pkey = secretKeyService.getPublishKey(user.getIdCard(), user.getToken());
+			LOGGER.info("从第三方机构获取公钥" + pkey);
+			user.setPublishKey(pkey);
+			User encryptUser = new User();
+			// 加密
+			encryptUser.setUsername(new EncryptUtils().Encrypt(user.getPublishKey(), user.getUsername()));
+			encryptUser.setPhone(new EncryptUtils().Encrypt(user.getPublishKey(), user.getPhone()));
+			encryptUser.setIdCard(user.getIdCard());
+			encryptUser.setPublishKey(user.getPublishKey());
+			encryptUser.setSex(user.getSex());
+			// 上链
+			userRepository.save(encryptUser);
+			LOGGER.info("用户信息密文上链成功");
+
+			// 传输口令给第三方
+			return true;
+
+		} catch (CheckException ce) {
 			return false;
 		}
-		return false;
 	}
-	
-	private String getPulibcKeyFromPKI(String idCard) {
-		
-		//http请求，参数为user的id		
-		return  "key";
-	}
-	
+
 	private void varifyUserInfo(User user) {
-		if(user!=null) {
+		if (user != null) {
 			userService.register(user);
 		}
 	}

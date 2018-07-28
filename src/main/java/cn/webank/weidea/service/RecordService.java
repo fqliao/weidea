@@ -76,8 +76,11 @@ public class RecordService {
 	}
 	
 	boolean filterRecordByCondition(SearchMedicalRecordReq smr,MedicalRecord record){
-		if(!record.getIdCard().equals(smr.getIdCard())) 
+		if(!record.getIdCard().equals(smr.getIdCard())) {
+			System.out.println("record.IdCard======================"+record.getIdCard()+"=================");
+			System.out.println("smr.IdCard======================"+smr.getIdCard()+"=================");
 			return false;
+		} 
 		//校验token--LULU
 		
 		/*if(smr.getStartTime()!=null&&smr.getEndTime()!=null) {
@@ -90,6 +93,12 @@ public class RecordService {
 		}
 		if(record.getCategory()!=null && !record.getCategory().equals(smr.getCategory()))
 			return false;*/		
+		if(record.getCategory()!=null && !record.getCategory().equals(smr.getCategory())) {			
+			System.out.println("record.getCategory()=============================="+record.getCategory()+"==================");
+			System.out.println("smr.getCategory()=============================="+smr.getCategory()+"==================");
+			
+			return false;			
+		}
 		return true;
 	}
 	
@@ -121,11 +130,11 @@ public class RecordService {
         try {
             Date dt1 = df.parse(DATE1);
             Date dt2 = df.parse(DATE2);
-            if (dt1.getTime() > dt2.getTime()) {
-                System.out.println("dt1 在dt2前");
+            if (dt1.getTime() < dt2.getTime()) {
+                System.out.println(dt1+"在"+dt2+"前");
                 return 1;
-            } else if (dt1.getTime() < dt2.getTime()) {
-                System.out.println("dt1在dt2后");
+            } else if (dt1.getTime() > dt2.getTime()) {
+                System.out.println(dt1+"在"+dt2+"后");
                 return -1;
             } else {
                 return 0;

@@ -2,24 +2,17 @@ package cn.webank.weidea.util;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.CharArrayBuffer;
 import org.apache.http.util.EntityUtils;
-import org.springframework.http.StreamingHttpOutputMessage;
+
+import cn.webank.weidea.dao.exception.CheckException;
 
 public class HttpUtil {
 
@@ -36,10 +29,6 @@ public class HttpUtil {
 		String result = null;
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		HttpPost post = new HttpPost(url);
-		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-//		for (Map.Entry<String, String> entry : map.entrySet()) {
-//			pairs.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
-//		}
 		CloseableHttpResponse response = null;
 		try {
 			post.setEntity(new ByteArrayEntity(json.getBytes("UTF-8")));
@@ -49,12 +38,8 @@ public class HttpUtil {
 				result = entityToString(entity);
 			}
 			return result;
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			throw new CheckException("http post失败", e);
 		} finally {
 			try {
 				httpClient.close();
@@ -66,7 +51,6 @@ public class HttpUtil {
 			}
 
 		}
-		return null;
 	}
 
 	private static String entityToString(HttpEntity entity) throws IOException {

@@ -41,6 +41,7 @@ public class MedicalRecordController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MedicalRecordController.class);
 	
 	@RequestMapping(value="api/record",method=RequestMethod.POST)
+
 	public  @ResponseBody Map<String,List<MedicalRecord>> searchMedicalRecord(
 			@RequestBody String requestBody,
 			HttpServletRequest httpRequest,
@@ -60,10 +61,6 @@ public class MedicalRecordController {
 			LOGGER.info("===========查询到就诊记录： "+mr.toString()+"==============");
 		}	
 		
-		/*String Response = response.toJson(mrs);
-		LOGGER.info("============"+Response+"========");
-		
-		return Response;*/
 		Map<String,List<MedicalRecord>> result=new HashMap();
 		result.put("medicalRecords", mrs);
 		return result;
