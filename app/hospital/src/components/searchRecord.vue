@@ -74,7 +74,7 @@
             <mu-icon value="ballot"></mu-icon>
           </mu-list-item-action>
           <mu-list-item-content class="recorditem">
-          	<span>病例：</span>
+          	<span>病历：</span>
             <span>{{record.proposal}}</span>
           </mu-list-item-content>
         </mu-list-item>
@@ -172,8 +172,8 @@ export default {
     	this.openDetail = false
     },
     showItem(url) {
-    	// this.$http.get(url).then(res => {
-    	this.$http.get('/api/singleRecord').then(res => {
+    	this.$http.get(url).then(res => {
+    	// this.$http.get('/api/singleRecord').then(res => {
     		this.record = res.body
     		this.openDetail = true
     	})

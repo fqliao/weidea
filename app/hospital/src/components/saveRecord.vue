@@ -1,29 +1,31 @@
 <template>
 <div class="saveRecord">
   <mu-container>
-    <mu-form :model="form" ref="form">
+    <mu-form :model="form" ref="form" class="form">
       <mu-form-item icon="chrome_reader_mode" help-text="" :rules="idRules" prop="idCard">
         <mu-text-field v-model="form.idCard" prop="idCard" placeholder="身份证号"></mu-text-field>
       </mu-form-item>
-      <mu-form-item icon="library_books" help-text="" :rules="categoryRules" prop="category">
-        <mu-text-field v-model="form.category" prop="category" placeholder="科室"></mu-text-field>
+      <div class="form-contain">
+        <mu-form-item class="form-item" icon="library_books" help-text="" :rules="categoryRules" prop="category">
+          <mu-text-field v-model="form.category" prop="category" placeholder="科室"></mu-text-field>
+        </mu-form-item>
+        <mu-form-item class="form-item" icon="dashboard" help-text="" :rules="itemRules" prop="item">
+          <mu-text-field v-model="form.item" prop="item" placeholder="检测项目"></mu-text-field>
+        </mu-form-item>
+      </div>
+      <mu-form-item icon="class" help-text="" :rules="proposalRules" prop="proposal">
+        <mu-text-field v-model="form.proposal" prop="proposal" placeholder="诊断结果"></mu-text-field>
       </mu-form-item>
-      <mu-form-item label="检测项目" help-text="" :rules="itemRules" prop="item">
-        <mu-text-field v-model="form.item" prop="item"></mu-text-field>
+      <mu-form-item icon="subject" help-text="" :rules="diagnosisRules" prop="diagnosis">
+        <mu-text-field v-model="form.diagnosis" prop="diagnosis" placeholder="处方"></mu-text-field>
       </mu-form-item>
-      <mu-form-item label="诊断结果" help-text="" :rules="proposalRules" prop="proposal">
-        <mu-text-field v-model="form.proposal" prop="proposal"></mu-text-field>
-      </mu-form-item>
-      <mu-form-item label="处方" help-text="" :rules="diagnosisRules" prop="diagnosis">
-        <mu-text-field v-model="form.diagnosis" prop="diagnosis"></mu-text-field>
-      </mu-form-item>
-      <mu-form-item label="记录日期" help-text="" :rules="dateRules" prop="date">
+      <!-- <mu-form-item icon="update" help-text="" :rules="dateRules" prop="date" label="记录日期" :label-float="true">
         <mu-date-input v-model="form.date" label-float full-width prop="date"></mu-date-input>
+      </mu-form-item> -->
+      <mu-form-item icon="lock" help-text="" :rules="passwordRules" prop="password">
+        <mu-text-field v-model="form.password" type="password" prop="password" placeholder="口令"></mu-text-field>
       </mu-form-item>
-      <mu-form-item label="口令" help-text="" :rules="passwordRules" prop="password">
-        <mu-text-field v-model="form.password" type="password" prop="password"></mu-text-field>
-      </mu-form-item>
-      <mu-form-item>
+      <mu-form-item class="btn">
         <mu-button color="primary" @click="submit">录入</mu-button>
       </mu-form-item>
     </mu-form>
@@ -87,13 +89,16 @@ export default {
           let form = Object.assign({}, this.form)
           const info = this.getData('hospitalInfo')
           form['hospital'] = info['hospital'] + ',' + info['doctor']
+          const date = new Date()
+          form['date'] = date
           console.log('req', form)
           this.$http.post('api/saveRecord', form).then(res => {
             if (res.body) {
-              this.dialogMsg = '上链成功'
+              this.dialogMsg = '病历录入成功'
               this.openDialog = true
+              this.form = {}
             } else {
-              this.dialogMsg = '上链失败'
+              this.dialogMsg = '病历录入失败'
               this.openDialog = true
             }
           })
@@ -106,5 +111,13 @@ export default {
 </script>
 
 <style lang = "scss">
-
+.form {
+  padding: 0 3rem;
+}
+.form-contain {
+  display: flex;
+  .form-item {
+    flex: 1;
+  }
+}
 </style>

@@ -37,7 +37,7 @@
       </mu-list-item>
       <mu-list-item class="dialog-item">
         <mu-list-item-action>
-          <span>病例：</span>
+          <span>病历：</span>
         </mu-list-item-action>
         <mu-list-item-content class="recorditem">
           <span>{{record.proposal}}</span>

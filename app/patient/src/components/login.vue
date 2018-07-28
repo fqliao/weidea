@@ -14,7 +14,7 @@
             <mu-text-field v-model="login.name" prop="name" placeholder="姓名"></mu-text-field>
           </mu-form-item>
           <mu-form-item icon="lock" help-text='' :rules="passwordRules" prop="password">
-            <mu-text-field v-model="login.password" prop="password" type="password" placeholder="密码"></mu-text-field>
+            <mu-text-field v-model="login.password" prop="password" type="password" placeholder="口令"></mu-text-field>
           </mu-form-item>
           <mu-form-item class="btn">
             <mu-button full-width color="primary" @click="loginFn">登陆</mu-button>
@@ -40,7 +40,7 @@
             <mu-text-field v-model="register.phone" prop="phone" placeholder="手机号"></mu-text-field>
           </mu-form-item>
           <mu-form-item icon="lock" help-text="" :rules="passwordRules" prop="password">
-            <mu-text-field v-model="register.password" type="password" prop="password" placeholder="密码"></mu-text-field>
+            <mu-text-field v-model="register.password" type="password" prop="password" placeholder="口令"></mu-text-field>
           </mu-form-item>
           <mu-form-item>
             <mu-flex justify-content="center" class="select-control-row" :key="'radio ' + i" v-for="(i, item) in sexArr">
@@ -179,6 +179,7 @@ export default {
 <style lang = "scss">
 .login {
   .logo {
+    width: 80vw;
     margin: 2.5rem;
   }
   height: 100%;
