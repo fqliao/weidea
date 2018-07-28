@@ -2,10 +2,8 @@ package cn.webank.weidea.util;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
@@ -13,6 +11,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.CharArrayBuffer;
 import org.apache.http.util.EntityUtils;
+
+import cn.webank.weidea.dao.exception.CheckException;
 
 public class HttpUtil {
 
@@ -38,12 +38,8 @@ public class HttpUtil {
 				result = entityToString(entity);
 			}
 			return result;
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			throw new CheckException("http post失败", e);
 		} finally {
 			try {
 				httpClient.close();
@@ -55,7 +51,6 @@ public class HttpUtil {
 			}
 
 		}
-		return null;
 	}
 
 	private static String entityToString(HttpEntity entity) throws IOException {
