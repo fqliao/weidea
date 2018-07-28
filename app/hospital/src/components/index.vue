@@ -1,12 +1,12 @@
 <template>
 <div class="index">
+  <img src="../../static/logo.png">
   <h1>医链云</h1>
   <h3>基于区块链的医疗信息管理系统</h3>
-  <img src="../../static/logo.png">
   <mu-container class="container-btn">
-    <mu-button large class="btn" @click="goRecord">查询病史</mu-button>
-    <mu-button large class="btn" @click="goSearchRecord">医生记录查询</mu-button>
-    <mu-button large class="btn" @click="goSaveRecord">录入信息</mu-button>
+    <mu-button color="primary" large class="btn" @click="goRecord">查询病史</mu-button>
+    <mu-button color="primary" large class="btn" @click="goSearchRecord">医生记录查询</mu-button>
+    <mu-button color="primary" large class="btn" @click="goSaveRecord">录入信息</mu-button>
   </mu-container>
 </div>
 </template>
@@ -57,7 +57,7 @@ export default {
     font-size: 2rem;
   }
   .container-btn {
-    margin-top: 2rem;
+    margin-top: 5rem;
     .btn {
       font-size: 1.2rem;
       margin: 0 1rem;

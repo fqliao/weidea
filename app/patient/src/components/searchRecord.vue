@@ -48,7 +48,7 @@
           <span>处方：</span>
         </mu-list-item-action>
         <mu-list-item-content class="recorditem">
-          <span>{{record.prescription}}</span>
+          <span>{{record.diagnosis}}</span>
         </mu-list-item-content>
       </mu-list-item>
     </mu-list>

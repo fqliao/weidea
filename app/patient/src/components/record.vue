@@ -10,7 +10,7 @@
           <td class="is-left">{{scope.row.category}}</td>
           <td class="is-left">{{scope.row.item}}</td>
           <td class="is-left">{{scope.row.proposal}}</td>
-          <td class="is-left">{{scope.row.prescription}}</td>
+          <td class="is-left">{{scope.row.diagnosis}}</td>
         </template>
       </mu-data-table>
     </mu-paper>
@@ -34,7 +34,7 @@ export default {
         { title: '科室', name: 'category', width: 120},
         { title: '检测项目', name: 'item', width: 180},
         { title: '诊断结果', name: 'proposal', width: 250},
-        { title: '处方', name: 'prescription', width: 250}
+        { title: '处方', name: 'diagnosis', width: 250}
       ]
     }
 	},

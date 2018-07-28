@@ -11,7 +11,7 @@
 				"category": "精神科",
 				"item": "???",
 				"date": 20180606,
-				"prescription": "脑残丸xxxx"
+				"diagnosis": "脑残丸xxxx"
 			},
 			{
 				"idCard": "35062348437192371973",
@@ -20,7 +20,7 @@
 				"category": "精神科",
 				"item": "???",
 				"date": 20180607,
-				"prescription": "脑残丸xxxx"
+				"diagnosis": "脑残丸xxxx"
 			},
 			{
 				"idCard": "35062348437192371973",
@@ -28,8 +28,54 @@
 				"proposal": "sjfoq23euo0 jwej rfweofjowejfowaejfwefojwefwojsfjowjfowejfowejfowejf",
 				"category": "精神科",
 				"item": "???",
+				"date": 20180607,
+				"diagnosis": "脑残丸xxxx"
+			},
+			{
+				"idCard": "35062348437192371973",
+				"hospital": "xxx医院",
+				"proposal": "sjfoq23euo0 jwej rfweofjowejfowaejfwefojwefwojsfjowjfowejfowejfowejf",
+				"category": "精神科",
+				"item": "???",
+				"date": 20180607,
+				"diagnosis": "脑残丸xxxx"
+			},
+			{
+				"idCard": "35062348437192371973",
+				"hospital": "xxx医院",
+				"proposal": "sjfoq23euo0 jwej rfweofjowejfowaejfwefojwefwojsfjowjfowejfowejfowejf",
+				"category": "精神科",
+				"item": "???",
+				"date": 20180607,
+				"diagnosis": "脑残丸xxxx"
+			},
+			{
+				"idCard": "35062348437192371973",
+				"hospital": "xxx医院",
+				"proposal": "sjfoq23euo0 jwej rfweofjowejfowaejfwefojwefwojsfjowjfowejfowejfowejf",
+				"category": "精神科",
+				"item": "???",
+				"date": 20180607,
+				"diagnosis": "脑残丸xxxx"
+			},
+			{
+				"idCard": "35062348437192371973",
+				"hospital": "xxx医院",
+				"proposal": "sjfoq23euo0 jwej rfweofjowejfowaejfwefojwefwojsfjowjfowejfowejfowejf",
+				"category": "精神科",
+				"item": "???",
+				"date": 20180607,
+				"diagnosis": "脑残丸xxxx"
+			},
+			
+			{
+				"idCard": "35062348437192371973",
+				"hospital": "xxx医院",
+				"proposal": "sjfoq23euo0 jwej rfweofjowejfowaejfwefojwefwojsfjowjfowejfowejfowejf",
+				"category": "精神科",
+				"item": "???",
 				"date": 20180608,
-				"prescription": "脑残丸xxxx"
+				"diagnosis": "脑残丸xxxx"
 			}
 		]
 	},
@@ -80,6 +126,6 @@
 		"category": "精神科",
 		"item": "???",
 		"date": 20180606,
-		"prescription": "脑残丸xxxx"
+		"diagnosis": "脑残丸xxxx"
 	}
 }
