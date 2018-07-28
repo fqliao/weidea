@@ -1,6 +1,7 @@
 <template>
 <div class="record">
   <mu-container>
+    <mu-button class="recordBtn" @click="goIndex">返回</mu-button>
     <mu-paper>
       <mu-data-table :columns="columns" :sort.sync="sort" @sort-change="handleSortChange" :data.sync="list">
         <template slot-scope="scope">
@@ -13,7 +14,6 @@
         </template>
       </mu-data-table>
     </mu-paper>
-    <mu-button class="recordBtn" @click="goRecord">返回</mu-button>
   </mu-container>
 </div>
 </template>
@@ -45,18 +45,26 @@ export default {
       password: userInfo.password
     }
     this.$http.post('api/record', head).then(res => {
-      console.log(res)
-      this.list = res.body.MedicalRecord
+      this.list = res.body.medicalRecords
     })
   },
   methods: {
-    handleSortChange ({name, order}) {
+    handleSortChange({name, order}) {
       this.list = this.list.sort((a, b) => order === 'asc' ? a[name] - b[name] : b[name] - a[name]);
+    },
+    goIndex() {
+      this.$router.push('/')
     }
   }
 }
 </script>
 
 <style lang = "scss">
+.record {
+  margin: 1rem;
+  .recordBtn {
+    margin: 1rem 0;
+  }
+}
 
 </style>

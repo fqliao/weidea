@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="changeInfo">
 		<p>修改手机号</p>
 		<mu-form :model="form" ref="form">
 	    <mu-form-item label="手机号" help-text="" :rules="phoneRules" prop="phone">
@@ -29,15 +29,17 @@ export default {
 	},
 	methods: {
 		submit() {
-			alert('确认')
+			this.$router.push('/')
 		},
 		cancel() {
-
+			this.$router.push('/')
 		}
 	}
 }
 </script>
 
 <style>
-	
+.changeInfo {
+	margin: 1rem;
+}
 </style>

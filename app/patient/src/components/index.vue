@@ -1,16 +1,14 @@
 <template>
 <div class="index">
-  <mu-list >
-  	<mu-list-item>
-    	<mu-button large class="btn" @click="goRecord">查询病史</mu-button>
-    </mu-list-item>
-    <mu-list-item>
-    	<mu-button large class="btn" @click="goSearchRecord">医生记录查询</mu-button>
-    </mu-list-item>
-    <mu-list-item>
-    	<mu-button large class="btn" @click="goChangeInfo">修改个人信息</mu-button>
-  	</mu-list-item>
-  </mu-list>
+	<mu-flex justify-content="center" class="item">
+  	<mu-button large class="btn" @click="goRecord">查询病史</mu-button>
+  </mu-flex>
+  <mu-flex justify-content="center" class="item">
+  	<mu-button large class="btn" @click="goSearchRecord">医生记录查询</mu-button>
+  </mu-flex>
+  <mu-flex justify-content="center" class="item">
+  	<mu-button large class="btn" @click="goChangeInfo">修改个人信息</mu-button>
+	</mu-flex>
 </div>
 </template>
 
@@ -28,7 +26,6 @@ export default {
       this.$router.push('login')
       return
     }
-    console.log(userInfo)
   	bus.$emit('user', userInfo.name)
 		bus.$emit('headerShow', true)
   },
@@ -47,5 +44,10 @@ export default {
 </script>
 
 <style lang = "scss">
-
+.index {
+	margin-top: 2rem;
+	.item {
+		margin: 1rem 0;
+	}
+}
 </style>

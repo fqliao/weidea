@@ -5,9 +5,12 @@
     	<img src="../../static/logo.png">
   	</mu-avatar>
 	  <p @click="goIndex">医链云</p>
-	  <mu-button flat slot="right">
+	  <mu-flex slot="right">
 	  	<p class="header-user">{{user}}</p>
-	  </mu-button>
+	  </mu-flex>
+	  <mu-flex slot="right">
+	  	<mu-button flat @click="goLogout">登出</mu-button>
+	  </mu-flex>
 	</mu-appbar>
 </div>
 </template>
@@ -33,6 +36,10 @@ export default {
 	methods: {
 		goIndex() {
 			this.$router.push('/')
+		},
+		goLogout() {
+			this.setData('userInfo', undefined)
+			this.$router.push('/login')
 		}
 	}
 }

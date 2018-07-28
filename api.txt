@@ -16,7 +16,7 @@ api/record [POST]:
     category: String,
     password: String
   res:
-  	MedicalRecord: {
+  	medicalRecords: {
   		[
   			idCard: String,
 				hospital: String,
@@ -57,7 +57,7 @@ api/searchRecord [POST]:
 		startTime: Date,
 		endTime: Date
 	res:
-		info: {
+		infos: {
 			[
 				idCard: String,
 				hospital: String,

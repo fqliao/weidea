@@ -20,6 +20,14 @@ export default new Router({
       }
     },
     {
+      path: '/register',
+      name: 'register',
+      component: Register,
+      meta: {
+        title: '注册'
+      }
+    },
+    {
       path: '/login',
       name: 'login',
       component: Login,
@@ -33,6 +41,14 @@ export default new Router({
       component: Record,
       meta: {
         title: '查询病史'
+      }
+    },
+    {
+      path: '/searchRecord',
+      name: 'searchRecord',
+      component: searchRecord,
+      meta: {
+        title: '医生记录查询'
       }
     },
     {
