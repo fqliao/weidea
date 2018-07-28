@@ -21,8 +21,17 @@ public class CheckException extends RuntimeException {
 		this.result = result;
 	}
 
-	public CheckException(Throwable arg0) {
+	public CheckException(String errorMsg, Throwable arg0) {
 		super(arg0);
+		Result<String> result = new Result<>();
+		result.setErrorMsg(errorMsg);
+		result.setCode(CodeUtil.CHECK_ERROR);
+		this.result = result;
+	}
+
+	public CheckException(Result<String> result, Throwable arg0) {
+		super(arg0);
+		this.result = result;
 	}
 
 	@SuppressWarnings("rawtypes")

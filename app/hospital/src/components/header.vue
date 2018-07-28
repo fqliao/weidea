@@ -39,6 +39,8 @@ export default {
 </script>
 
 <style>
+.header{
+	margin-bottom: 5rem;
 	.header-contain {
 		width: 100%;
 		padding: 0 1rem;
@@ -46,4 +48,5 @@ export default {
 	.header-user {
 		font-size: 1.2rem;
 	}
+}
 </style>

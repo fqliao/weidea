@@ -100,6 +100,8 @@ export default {
       this.$refs.form.validate().then(result => {
         if (result) {
           let form = Object.assign({}, this.form)
+          const hospitalInfo = this.getData('hospitalInfo')
+          form['hospital'] = hospitalInfo['hospital'] + ',' + hospitalInfo['doctor']
           this.$http.post('api/record', form).then(res => {
             this.list = res.body.medicalRecords
             this.showOut = false
