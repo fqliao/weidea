@@ -33,7 +33,7 @@ public class MedicalRecordController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MedicalRecordController.class);
 	
 	@RequestMapping(value="api/record",method=RequestMethod.POST)
-	public @ResponseBody Gson searchMedicalRecord(
+	public @ResponseBody List<MedicalRecord> searchMedicalRecord(
 			@RequestBody String requestBody,
 			HttpServletRequest httpRequest,
 			HttpServletResponse httpResponse) {
@@ -53,7 +53,8 @@ public class MedicalRecordController {
 			LOGGER.info("===========查询到就诊记录： "+mr.toString()+"==============");
 		}	
 		
-		return response;
+		
+		return mrs;
 	}
 	
 	@ResponseBody
