@@ -124,8 +124,8 @@ public class RecordService {
 	private void addQueryRecord(SearchMedicalRecordReq searchMedicalRecordReq, int index) {
 		MedicalQueryRecord mqr = new MedicalQueryRecord();
 		mqr.setIdCard(searchMedicalRecordReq.getIdCard());
-		// mqr.setHospitalAndDoctor(searchMedicalRecordReq.getHospital());
-		mqr.setHospitalAndDoctor("hospitalAndDoctor");
+		mqr.setHospitalAndDoctor(searchMedicalRecordReq.getHospital());
+//		mqr.setHospitalAndDoctor("hospitalAndDoctor");
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		String date = df.format(new Date());
 		mqr.setDate(date);
