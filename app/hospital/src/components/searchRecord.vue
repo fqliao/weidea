@@ -31,7 +31,7 @@
             <template slot-scope="scope">
               <td class="is-center">{{scope.row.date}}</td>
               <td class="is-left">{{scope.row.hospital}}</td>
-              <td class="is-left">{{scope.row.hospital}}</td>
+              <td class="is-left">{{scope.row.doctor}}</td>
               <td class="is-left">{{scope.row.recordHash}}</td>
             </template>
           </mu-data-table>
@@ -77,7 +77,7 @@ export default {
       columns: [
         { title: '诊断时间', name: 'date', width: 180, sortable: true},
         { title: '医院', name: 'hospital', width: 180},
-        { title: '医生', name: 'hospital', width: 180},
+        { title: '医生', name: 'doctor', width: 180},
         { title: '诊断详情', name: 'recordHash', width: 180}
       ]
     }
@@ -91,7 +91,13 @@ export default {
 	 				form['hospital'] = info['hospital'] + ',' + info['doctor']
 	 				console.log('req', form)
 	 				this.$http.post('api/searchRecord', form).then(res => {
-	 					this.list = res.body.info
+	 					let infos = res.body.infos
+	 					for (let info of infos) {
+			        let hs = info['hospital'].split(',')
+			        info['hospital'] = hs[0]
+			        info['doctor'] = hs[1]
+			      }
+	 					this.list = infos
 	 					this.showOut = false
             setTimeout(() => {
               this.showIn = true

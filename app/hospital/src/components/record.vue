@@ -101,7 +101,7 @@ export default {
         if (result) {
           let form = Object.assign({}, this.form)
           this.$http.post('api/record', form).then(res => {
-            this.list = res.body.MedicalRecord
+            this.list = res.body.medicalRecords
             this.showOut = false
             setTimeout(() => {
               this.showIn = true

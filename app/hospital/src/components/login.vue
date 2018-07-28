@@ -1,16 +1,23 @@
 <template>
 <div class="login">
-	<mu-form :model="form" ref="form">
-    <mu-form-item label="医院">
-      <mu-text-field v-model="form.hospital"></mu-text-field>
-    </mu-form-item>
-    <mu-form-item label="医生">
-      <mu-text-field v-model="form.doctor"></mu-text-field>
-    </mu-form-item>
-    <mu-form-item>
-      <mu-button color="primary" @click="goLogin">登陆</mu-button>
-    </mu-form-item>
-  </mu-form>	
+<mu-container>
+	<mu-flex justify-content="start">
+		a
+	</mu-flex>
+	<mu-flex justify-content="end">
+		<mu-form :model="form" ref="form">
+	    <mu-form-item label="医院">
+	      <mu-text-field v-model="form.hospital"></mu-text-field>
+	    </mu-form-item>
+	    <mu-form-item label="医生">
+	      <mu-text-field v-model="form.doctor"></mu-text-field>
+	    </mu-form-item>
+	    <mu-form-item>
+	      <mu-button color="primary" @click="goLogin">登陆</mu-button>
+	    </mu-form-item>
+	  </mu-form>
+	</mu-flex>
+</mu-container>
 </div>
 </template>
 
