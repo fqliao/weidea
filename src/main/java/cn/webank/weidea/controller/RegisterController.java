@@ -50,8 +50,7 @@ public class RegisterController {
 				user.setSex(Integer.parseInt(jsonObject.getString("sex")));
 			}			
 		}
-		registerService.register(user);
-		return true;
+		return registerService.register(user);
 	}
 
 }

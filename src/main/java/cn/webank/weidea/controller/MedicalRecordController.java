@@ -42,16 +42,21 @@ public class MedicalRecordController {
 		Gson request = new Gson();
 		SearchMedicalRecordReq searchMedicalRecordReq = new SearchMedicalRecordReq();
 		searchMedicalRecordReq = request.fromJson(requestBody,SearchMedicalRecordReq.class);
-
+		
+		LOGGER.info("========获取到查询条件："+searchMedicalRecordReq.toString()+"========");
+		
+		LOGGER.info("==========开始搜索就诊记录===========");
 		List<MedicalRecord> mrs=recordService.searchRecord(searchMedicalRecordReq);
 		
-//		for(MedicalRecord mr: mrs) {
-//			LOGGER.info(mr.toString());
-//		}	
-//		
+		
+		for(MedicalRecord mr: mrs) {
+			LOGGER.info("===========查询到就诊记录： "+mr.toString()+"==============");
+		}	
+		
 		return response;
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="api/saveRecord",method=RequestMethod.POST)
 	public boolean saveMedicalRecord(
 			@RequestBody String requestBody,
@@ -62,14 +67,13 @@ public class MedicalRecordController {
 		Gson request = new Gson();
 		SaveMedicalRecordReq saveMedicalRecordReq = new SaveMedicalRecordReq();
 		saveMedicalRecordReq = request.fromJson(requestBody,SaveMedicalRecordReq.class);		
-		
+		LOGGER.info("========获取到录入信息："+saveMedicalRecordReq.toString()+"========");
 //		
 //		Hospital hospital = new Hospital();
 //		hospital.setOrganizationCodeNumber(saveMedicalRecordReq.getHospital());
 //		User user = new User();
-//		user.setIdCard(saveMedicalRecordReq.getIdCard());
-		
-		//需要写入医院信息吗		
+//		user.setIdCard(saveMedicalRecordReq.getIdCard());		
+				
 		return recordService.savaRecord(saveMedicalRecordReq);
 	}
 	

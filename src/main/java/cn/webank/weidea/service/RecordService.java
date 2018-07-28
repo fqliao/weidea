@@ -26,11 +26,17 @@ public class RecordService {
 	
 	public boolean savaRecord(SaveMedicalRecordReq record) {
 		
-		MedicalRecord mr=convertToMedicalRecord(record);
-		if(varifyRecord(mr)) {
-			medicalRecordRepository.save(mr);
-			return true;
-		}
+		try {
+			MedicalRecord mr=convertToMedicalRecord(record);
+			if(varifyRecord(mr)) {
+				medicalRecordRepository.save(mr);
+				LOGGER.info("==========成功写入就诊记录："+mr.toString()+"=======");
+				return true;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}		
 		return false;
 	}
 	
@@ -38,8 +44,10 @@ public class RecordService {
 		
 		List<MedicalRecord> records=new ArrayList();
 		int count=medicalRecordRepository.count();
+		LOGGER.info("===========从链上查询到就诊记录共有："+count+"条");
 		for(int i=0;i<count;i++) {
 			MedicalRecord mr=medicalRecordRepository.findByIndex(i);
+			LOGGER.info("处理就诊记录："+mr.toString());
 			if(filterRecordByCondition(searchMedicalRecordReq,mr)) {
 				records.add(mr);
 				
@@ -47,8 +55,7 @@ public class RecordService {
 				
 			}
 		}
-		return records;
-		
+		return records;		
 	}
 	
 	boolean filterRecordByCondition(SearchMedicalRecordReq smr,MedicalRecord record){

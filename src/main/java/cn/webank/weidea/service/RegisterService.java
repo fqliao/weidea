@@ -39,7 +39,6 @@ public class RegisterService {
 			}
 			
 		}catch(CheckException ce) {			
-			ce.printStackTrace();
 			return false;
 		}
 		return false;
