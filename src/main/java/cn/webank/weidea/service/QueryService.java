@@ -36,6 +36,11 @@ public class QueryService {
 		 return result;
 	 }
 	 
+	 
+//	 public convertTo() {
+//		 
+//	 }
+	 
 	 void verifyParam() {
 		 
 	 }
