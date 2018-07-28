@@ -3,9 +3,9 @@ package cn.webank.weidea.dao;
 import java.math.BigInteger;
 import java.util.List;
 
-import org.bcos.channel.client.Service;
 import org.bcos.web3j.abi.datatypes.Type;
 import org.bcos.web3j.abi.datatypes.Utf8String;
+import org.bcos.channel.client.Service;
 import org.bcos.web3j.abi.datatypes.generated.Uint256;
 import org.bcos.web3j.crypto.Credentials;
 import org.bcos.web3j.crypto.ECKeyPair;
@@ -17,19 +17,19 @@ import org.springframework.stereotype.Repository;
 
 import cn.webank.weidea.dao.exception.BlockChainException;
 import cn.webank.weidea.entity.ContractAddress;
-import cn.webank.weidea.entity.MedicalRecord;
-import cn.webank.weidea.mcc.Record;
+import cn.webank.weidea.entity.MedicalQueryRecord;
+import cn.webank.weidea.mcc.QueryRecord;
 
 @Repository
-public class MedicalRecordRepository {
+public class QueryRecordRepository {
 	@Autowired
 	private Service service;
 	@Autowired
 	private ContractAddressRepository contractAddressRepository;
-	private Record record;
+	private QueryRecord queryRecord;
 
-	private Record getRecord() {
-		if (record == null) {
+	private QueryRecord getQueryRecord() {
+		if (queryRecord == null) {
 			try {
 				service.run();
 				ChannelEthereumService channelEthereumService = new ChannelEthereumService();
@@ -47,59 +47,54 @@ public class MedicalRecordRepository {
 				java.math.BigInteger gasLimit = new BigInteger("30000000");
 				java.math.BigInteger initialWeiValue = new BigInteger("0");
 				// 部署合约
-				String contractAddress = contractAddressRepository.findAddressByCategory(Record.class.getName());
+				String contractAddress = contractAddressRepository.findAddressByCategory(QueryRecord.class.getName());
 				if (contractAddress == null) {
-					this.record = Record.deploy(web3, credentials, gasPrice, gasLimit, initialWeiValue).get();
+					this.queryRecord = QueryRecord.deploy(web3, credentials, gasPrice, gasLimit, initialWeiValue).get();
 					contractAddressRepository
-							.save(new ContractAddress(record.getContractAddress(), Record.class.getName()));
+							.save(new ContractAddress(queryRecord.getContractAddress(), QueryRecord.class.getName()));
 				} else {
-					this.record = Record.load(contractAddress, web3, credentials, gasPrice, gasLimit);
+					this.queryRecord = QueryRecord.load(contractAddress, web3, credentials, gasPrice, gasLimit);
 				}
 			} catch (Exception e) {
 				throw new BlockChainException(e);
 			}
 		}
-		return this.record;
+		return this.queryRecord;
 	}
 
 	public int count() {
-		Record record = getRecord();
+		QueryRecord queryRecord = getQueryRecord();
 		try {
-			return record.numRecord().get().getValue().intValue();
+			return queryRecord.numhistoryRecords().get().getValue().intValue();
 		} catch (Exception e) {
 			throw new BlockChainException(e);
 		}
 	}
 
 	@SuppressWarnings("rawtypes")
-	public MedicalRecord findByIndex(int index) {
-		Record record = getRecord();
+	public MedicalQueryRecord findByIndex(int index) {
+		QueryRecord queryRecord = getQueryRecord();
 		try {
-			MedicalRecord medicalRecord = new MedicalRecord();
-			List<Type> list = record.records(new Uint256(index)).get();
-			medicalRecord.setIdCard(list.get(0).getValue().toString());
-			medicalRecord.setHospitalAndDoctor(list.get(1).getValue().toString());
-			medicalRecord.setCategory(list.get(2).getValue().toString());
-			medicalRecord.setItem(list.get(3).getValue().toString());
-			medicalRecord.setDiagnosis(list.get(4).getValue().toString());
-			medicalRecord.setProposal(list.get(5).getValue().toString());
-			medicalRecord.setDate(list.get(6).getValue().toString());
-			return medicalRecord;
+			List<Type> list = queryRecord.historyRecords(new Uint256(index)).get();
+			MedicalQueryRecord medicalQueryRecord = new MedicalQueryRecord();
+			medicalQueryRecord.setIdCard(list.get(0).getValue().toString());
+			medicalQueryRecord.setHospitalAndDoctor(list.get(1).getValue().toString());
+			medicalQueryRecord.setRecordHash(list.get(0).getValue().toString());
+			medicalQueryRecord.setDate((list.get(0).getValue().toString()));
+			return medicalQueryRecord;
 		} catch (Exception e) {
 			throw new BlockChainException(e);
 		}
 	}
 
-	public void save(MedicalRecord medicalRecord) {
-		Record record = getRecord();
+	public void save(MedicalQueryRecord medicalQueryRecord) {
+		QueryRecord queryRecord = getQueryRecord();
 		try {
-			record.saveMedicalRecord(new Utf8String(medicalRecord.getIdCard()),
-					new Utf8String(medicalRecord.getHospitalAndDoctor()), new Utf8String(medicalRecord.getCategory()),
-					new Utf8String(medicalRecord.getItem()), new Utf8String(medicalRecord.getDiagnosis()),
-					new Utf8String(medicalRecord.getProposal()), new Utf8String(medicalRecord.getDate())).get();
+			queryRecord.saveHistoryRecord(new Utf8String(medicalQueryRecord.getIdCard()),
+					new Utf8String(medicalQueryRecord.getHospitalAndDoctor()),
+					new Uint256(medicalQueryRecord.getIndex()), new Utf8String(medicalQueryRecord.getDate()));
 		} catch (Exception e) {
 			throw new BlockChainException(e);
 		}
 	}
-
 }
