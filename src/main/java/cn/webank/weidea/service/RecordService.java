@@ -72,7 +72,12 @@ public class RecordService {
 		LOGGER.info("===========从链上查询到就诊记录共有：" + count + "条");
 		for (int i = 0; i < count; i++) {
 			MedicalRecord encryptMedicalRecord = medicalRecordRepository.findByIndex(i);
+			if (!idCard.equals(encryptMedicalRecord.getIdCard())) {
+				continue;
+			}
+
 			MedicalRecord mr = new MedicalRecord();
+
 			mr.setCategory(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getCategory()));
 			mr.setDiagnosis(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getDiagnosis()));
 			mr.setHospitalAndDoctor(
@@ -100,21 +105,24 @@ public class RecordService {
 		int count = medicalRecordRepository.count();
 		LOGGER.info("===========从链上查询到就诊记录共有：" + count + "条");
 		for (int i = 0; i < count; i++) {
-			MedicalRecord encryptMedicalRecord = medicalRecordRepository.findByIndex(i);
-			MedicalRecord mr = new MedicalRecord();
-			mr.setCategory(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getCategory()));
-			mr.setDiagnosis(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getDiagnosis()));
-			mr.setHospitalAndDoctor(
-					secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getHospitalAndDoctor()));
-			mr.setItem(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getItem()));
-			mr.setProposal(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getProposal()));
-			mr.setDate(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getDate()));
-			mr.setIdCard(idCard);
-
-			LOGGER.info("处理就诊记录：" + mr.toString());
-			if (filterRecordByCondition(searchMedicalRecordReq, mr)) {
-				records.add(mr);
-				addQueryRecord(searchMedicalRecordReq, i);
+			try {
+				MedicalRecord encryptMedicalRecord = medicalRecordRepository.findByIndex(i);
+				MedicalRecord mr = new MedicalRecord();
+				mr.setCategory(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getCategory()));
+				mr.setDiagnosis(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getDiagnosis()));
+				mr.setHospitalAndDoctor(
+						secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getHospitalAndDoctor()));
+				mr.setItem(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getItem()));
+				mr.setProposal(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getProposal()));
+				mr.setDate(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getDate()));
+				mr.setIdCard(idCard);
+				LOGGER.info("处理就诊记录：" + mr.toString());
+				if (filterRecordByCondition(searchMedicalRecordReq, mr)) {
+					records.add(mr);
+					addQueryRecord(searchMedicalRecordReq, i);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 
@@ -125,7 +133,7 @@ public class RecordService {
 		MedicalQueryRecord mqr = new MedicalQueryRecord();
 		mqr.setIdCard(searchMedicalRecordReq.getIdCard());
 		mqr.setHospitalAndDoctor(searchMedicalRecordReq.getHospital());
-//		mqr.setHospitalAndDoctor("hospitalAndDoctor");
+		// mqr.setHospitalAndDoctor("hospitalAndDoctor");
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		String date = df.format(new Date());
 		mqr.setDate(date);
