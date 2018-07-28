@@ -172,12 +172,15 @@ export default {
     	this.openDetail = false
     },
     showItem(index) {
+      const form = this.form
       let head = {
         index: index,
-
+        idCard: form['idCard'],
+        password: form['password']
       }
-    	this.$http.get('/api/onerecord').then(res => {
-    		this.record = res.body.MedicalRecord
+      console.log(head)
+    	this.$http.post('/api/onerecord', head).then(res => {
+    		this.record = res.body
     		this.openDetail = true
     	})
     }	
@@ -197,14 +200,14 @@ export default {
 	padding: 0 2px;
 }
 .recorditem {
+  display: flex;
 	span:first-child {
-		position: absolute;
+    flex: 0 0 auto;
 		display: flex;
     align-items: center;
 	}
 	span:last-child {
-		padding-left: 5rem;
-		display: block;
+		flex: 1 1 auto;
 	} 
 }
 .submitbtn {

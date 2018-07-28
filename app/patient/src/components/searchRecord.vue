@@ -9,8 +9,8 @@
           <td class="is-left">{{scope.row.hospital}}</td>
           <td class="is-left">{{scope.row.doctor}}</td>
           <td class="is-left">
-            <span v-for="(url, index) in scope.row.numRecord">
-              <a class="showItem" @click="showItem(url)">记录{{index+1}}</a>
+            <span v-for="(i, index) in scope.row.numRecord">
+              <a class="showItem" @click="showItem(i)">记录{{index+1}}</a>
             </span>
           </td>
         </template>
@@ -104,9 +104,14 @@ export default {
     closeDetail() {
       this.openDetail = false
     },
-    showItem(url) {
-      // this.$http.get(url).then(res => {
-      this.$http.get('/api/singleRecord').then(res => {
+    showItem(index) {
+      const form = this.form
+      let head = {
+        index: index,
+        idCard: form['idCard'],
+        password: form['password']
+      }
+      this.$http.get('/api/onerecord').then(res => {
         this.record = res.body
         this.openDetail = true
       })
@@ -124,6 +129,17 @@ export default {
 }
 .recordBtn {
   margin-top: 20px;
+}
+.recorditem {
+  display: flex;
+  span:first-child {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+  }
+  span:last-child {
+    flex: 1 1 auto;
+  } 
 }
 .showItem {
   cursor: pointer;
