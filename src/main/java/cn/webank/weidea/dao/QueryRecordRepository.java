@@ -12,6 +12,8 @@ import org.bcos.web3j.crypto.ECKeyPair;
 import org.bcos.web3j.crypto.Keys;
 import org.bcos.web3j.protocol.Web3j;
 import org.bcos.web3j.protocol.channel.ChannelEthereumService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -27,10 +29,12 @@ public class QueryRecordRepository {
 	@Autowired
 	private ContractAddressRepository contractAddressRepository;
 	private QueryRecord queryRecord;
+	private static final Logger LOGGER = LoggerFactory.getLogger(QueryRecordRepository.class);
 
 	private QueryRecord getQueryRecord() {
 		if (queryRecord == null) {
 			try {
+				LOGGER.info("queryRecord is empty,beginning generate");
 				service.run();
 				ChannelEthereumService channelEthereumService = new ChannelEthereumService();
 				channelEthereumService.setChannelService(service);
@@ -46,13 +50,17 @@ public class QueryRecordRepository {
 				java.math.BigInteger gasPrice = new BigInteger("30000000");
 				java.math.BigInteger gasLimit = new BigInteger("30000000");
 				java.math.BigInteger initialWeiValue = new BigInteger("0");
+				
+				LOGGER.info("beginning get the queryRecord");
 				// 部署合约
 				String contractAddress = contractAddressRepository.findAddressByCategory(QueryRecord.class.getName());
 				if (contractAddress == null) {
+					LOGGER.info("first get the queryRecord,deploy queryRecord");
 					this.queryRecord = QueryRecord.deploy(web3, credentials, gasPrice, gasLimit, initialWeiValue).get();
 					contractAddressRepository
 							.save(new ContractAddress(queryRecord.getContractAddress(), QueryRecord.class.getName()));
 				} else {
+					LOGGER.info("contractAddress is exist,so load the queryRecord ");
 					this.queryRecord = QueryRecord.load(contractAddress, web3, credentials, gasPrice, gasLimit);
 				}
 			} catch (Exception e) {
@@ -88,6 +96,7 @@ public class QueryRecordRepository {
 	}
 
 	public void save(MedicalQueryRecord medicalQueryRecord) {
+		LOGGER.debug("queryRecord save the medicalQueryRecord:" + medicalQueryRecord.toString());
 		QueryRecord queryRecord = getQueryRecord();
 		try {
 			queryRecord.saveHistoryRecord(new Utf8String(medicalQueryRecord.getIdCard()),

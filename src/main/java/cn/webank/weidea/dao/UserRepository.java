@@ -13,6 +13,8 @@ import org.bcos.web3j.crypto.ECKeyPair;
 import org.bcos.web3j.crypto.Keys;
 import org.bcos.web3j.protocol.Web3j;
 import org.bcos.web3j.protocol.channel.ChannelEthereumService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -28,10 +30,12 @@ public class UserRepository {
 	@Autowired
 	private ContractAddressRepository contractAddressRepository;
 	private Kyc kyc;
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserRepository.class);
 
 	private Kyc getKcy() {
 		if (kyc == null) {
 			try {
+				LOGGER.info("kyc is empty,beginning generate");
 				service.run();
 				ChannelEthereumService channelEthereumService = new ChannelEthereumService();
 				channelEthereumService.setChannelService(service);
@@ -48,12 +52,15 @@ public class UserRepository {
 				java.math.BigInteger gasLimit = new BigInteger("30000000");
 				java.math.BigInteger initialWeiValue = new BigInteger("0");
 
+				LOGGER.info("beginning get the KYC");
 				// 部署合约
 				String contractAddress = contractAddressRepository.findAddressByCategory(Kyc.class.getName());
 				if (contractAddress == null) {
+					LOGGER.info("first get the KYC,deploy Kyc");
 					this.kyc = Kyc.deploy(web3, credentials, gasPrice, gasLimit, initialWeiValue).get();
 					contractAddressRepository.save(new ContractAddress(kyc.getContractAddress(), Kyc.class.getName()));
 				} else {
+					LOGGER.info("contractAddress is exist,so load the kyc ");
 					this.kyc = Kyc.load(contractAddress, web3, credentials, gasPrice, gasLimit);
 				}
 			} catch (Exception e) {
@@ -73,6 +80,7 @@ public class UserRepository {
 	}
 
 	public void save(User user) {
+		LOGGER.debug("kyc save the user:" + user.toString());
 		Kyc kcy = getKcy();
 		try {
 			kcy.register(new Utf8String(user.getIdCard()), new Utf8String(user.getPublishKey()),
