@@ -29,7 +29,7 @@ export default {
         order: 'desc'
       },
       columns: [
-        { title: '诊断时间', name: 'date', width: 120, sortable: true},
+        { title: '诊断时间', name: 'date', width: 150, sortable: true},
         { title: '医院', name: 'hospital', width: 120},
         { title: '科室', name: 'category', width: 120},
         { title: '检测项目', name: 'item', width: 180},

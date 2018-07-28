@@ -70,7 +70,7 @@ export default {
         order: 'desc'
       },
       columns: [
-        { title: '诊断时间', name: 'date', width: 120, sortable: true},
+        { title: '诊断时间', name: 'date', width: 150, sortable: true},
         { title: '医院', name: 'hospital', width: 120},
         { title: '医生', name: 'doctor', width: 120},
         { title: '诊断详情', name: 'numRecord', width: 180}
