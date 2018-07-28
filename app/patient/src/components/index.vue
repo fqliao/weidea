@@ -58,7 +58,7 @@ export default {
 	margin-top: 2rem;
   img {
     margin: 0 auto;
-    width: 80vw;
+    width: 60vw;
     display: block;
     padding-top: 2rem;
   }

@@ -28,6 +28,7 @@ export default {
     }
     bus.$emit('user', info.doctor)
     bus.$emit('headerShow', true)
+    bus.$emit('footerShow', true)
   },
   methods: {
     goRecord() {
@@ -45,6 +46,9 @@ export default {
 
 <style lang = "scss">
 .index {
+  img {
+    width: 30vw;
+  }
   margin: 0 1rem;
   text-align: center;
   h1 {

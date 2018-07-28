@@ -6,15 +6,18 @@
  				<router-view></router-view>
  			</div>
  		</div>
+    <v-footer></v-footer>
   </div>
 </template>
 
 <script>
 import header from '@/components/header.vue'
+import footer from '@/components/footer.vue'
 export default {
   name: 'app',
   components: {
-  	'v-header': header
+  	'v-header': header,
+    'v-footer': footer
   },
   beforeCreate() {
     if (this.$router.currentRoute.path !== '/login') {
@@ -33,11 +36,5 @@ body {
 }
 #app {
   height: 100%;
-}
-.content {
-  margin-top: 5rem;
-  @media screen and (max-width: 600px) {
-    margin-top: 1rem;
-  }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
 <div class="header" v-show="headerShow">
 	<mu-appbar color="primary">
-    <mu-avatar color="teal" slot="left" @click="goIndex">
+    <mu-avatar slot="left" @click="goIndex">
     	<img src="../../static/logo.png">
   	</mu-avatar>
 	  <p @click="goIndex">医链云</p>
@@ -40,6 +40,9 @@ export default {
 
 <style lang = "scss">
 .header{
+	img {
+		background-color: #2196f3;
+	}
 	margin-bottom: 5rem;
 	.mu-appbar {
 		width: 100%;

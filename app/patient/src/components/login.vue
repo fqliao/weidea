@@ -179,8 +179,8 @@ export default {
 <style lang = "scss">
 .login {
   .logo {
-    width: 80vw;
-    margin: 2.5rem;
+    width: 60vw;
+    margin: 1.5rem;
   }
   height: 100%;
   .form {

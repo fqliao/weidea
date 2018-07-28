@@ -61,13 +61,13 @@ api/searchRecord [POST]:
 			[
 				idCard: String,
 				hospital: String,
-				numRecord: String,
+				numRecord: Array,
 				date: Date
 			],
 			[
 				idCard: String,
 				hospital: String,
-				numRecord: String,
+				numRecord: Array,
 				date: Date
 			]
 		}
