@@ -41,24 +41,45 @@
 			{
 				"idCard": "257923754328745",
 				"hospital": "xx医院,xx医生",
-				"recordHash": "hashzhi",
+				"numRecord": [
+					"www.xxx.com",
+					"www.xxx.com",
+					"www.xxx.com"
+				],
 				"date": 20180808
 			},
 			{
 				"idCard": "257923754328745",
 				"hospital": "xx医院,xx医生",
-				"recordHash": "hashzhi",
+				"numRecord": [
+					"www.xxx.com",
+					"www.xxx.com",
+					"www.xxx.com"
+				],
 				"date": 20180808
 			},
 			{
 				"idCard": "257923754328745",
 				"hospital": "xx医院,xx医生",
-				"recordHash": "hashzhi",
+				"numRecord": [
+					"www.xxx.com",
+					"www.xxx.com",
+					"www.xxx.com"
+				],
 				"date": 20180808
 			}
 		]
 	},
 	"login": {
 		"status": true
+	},
+	"singleRecord": {
+		"idCard": "35062348437192371973",
+		"hospital": "xxx医院",
+		"proposal": "sjfoq23euo0 jwej rfweofjowejfowaejfwefojwefwojsfjowjfowejfowejfowejf",
+		"category": "精神科",
+		"item": "???",
+		"date": 20180606,
+		"prescription": "脑残丸xxxx"
 	}
 }

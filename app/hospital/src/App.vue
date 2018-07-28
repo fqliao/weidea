@@ -25,10 +25,13 @@ export default {
 </script>
 
 <style lang = "scss">
-.content {
-  margin-top: 5rem;
-  @media screen and (max-width: 600px) {
-    margin-top: 1rem;
-  }
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+}
+#app {
+  height: 100%;
 }
 </style>
