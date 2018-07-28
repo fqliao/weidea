@@ -100,5 +100,11 @@ public class KeyManagementException implements KeyManagementRepository{
 		return null;
 	}
 
+	@Override
+	public int exist(String idCard) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 }

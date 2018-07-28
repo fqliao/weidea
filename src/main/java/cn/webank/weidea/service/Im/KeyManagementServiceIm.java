@@ -26,6 +26,17 @@ public class KeyManagementServiceIm extends BaseServiceIm implements KeyManageme
 	public KeyManagementRsp secretKey(KeyManagement keyManagement) {
 		KeyManagementRsp response = new KeyManagementRsp();
 		
+		System.out.println("===================="+keyManagement.getIdCard()+"==========================");
+		int temp = keyManagementDao.exist(keyManagement.getIdCard());
+		System.out.println("======================="+(temp > 0)+"==========================");
+		if(temp > 0) {
+			response.setCode(1);
+			response.setErrorMsg("用户已存在");
+			response.setData(null);
+			
+			return response;
+		}
+		
 		//存储token
 		TokenEncryptUtils tokenUtils = new TokenEncryptUtils();
 		String token = tokenUtils.Encrypt(keyManagement.getToken(), "");
@@ -68,7 +79,9 @@ public class KeyManagementServiceIm extends BaseServiceIm implements KeyManageme
 		//验证token
 		TokenEncryptUtils tokenUtils = new TokenEncryptUtils();
 		String temp = tokenUtils.Encrypt(req.getToken(), "");
-		if(record.getToken().equals(temp)) {
+		System.out.println("========================"+temp+"=======================");
+		System.out.println("========================"+record.getToken()+"=========================");
+		if(!(record.getToken().equals(temp))) {
 			response.setCode(1);
 			response.setErrorMsg("密码错误");
 			response.setData(null);

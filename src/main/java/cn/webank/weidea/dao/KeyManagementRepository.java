@@ -9,4 +9,7 @@ import cn.webank.weidea.entity.KeyManagement;
 public interface KeyManagementRepository extends CrudRepository<KeyManagement, Integer>{
 	@Query("from KeyManagement where idCard = ?")
 	KeyManagement searchRecord(String idCard);
+	
+	@Query("select count(*) from KeyManagement where idCard = ?")
+	int exist(String idCard);
 }

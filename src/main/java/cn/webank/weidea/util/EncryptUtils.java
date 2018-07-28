@@ -134,7 +134,7 @@ public class EncryptUtils {
 			byte[] results=cipher.doFinal("我是要被加密的数据！".getBytes("UTF-8"));
 			String result = new String(Base64.encodeBase64(results));
 			
-			String result2 = testUtils.Encrypt("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApVTEyUSofS+WvoruDfqSDCFgZuNAJzNvAw8wsnvd+TzK3lwTNJOt9jzy3YtwMJ11eDRRxhhE5f89KChfiRUkPisEpTGJXT2uZi9j/JAx5vdXqjMm4EbE5ep07P+GQM4tvOSTcFzTAPQkAb/7VHhTIcs1AgzW0fPqZOFq2wiUrBIHqhdfo46jxDAtRcNrQiTMgqIuSMP/lXrJ6izn66kRE6Kd6H0If9SDZqbEawb+14d3bJn6xkANgURC/7bwgc4sEuwLbAUSNKvSFWdFz7Xyt5npq4NqT2d2B3qEOZRqIuU4H0kiU3dKnNnQaQAT+wPA0lUGMoIwCWRx1v8jkhfXawIDAQAB", "测试加密方法");
+			String result2 = testUtils.Encrypt("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjg6BXOAIMHBo6p28N5KsclJKIrlIl2Elv+rQrnzL1j7kfJUC0oqIAqvrfM4KCPq3Nfuu3jN63KmXiMvTZxnYeYUTGNpNmBu8sEJwFQ3Phfgqv17f91G7Et3E5P5LrSnpXjVg/ar3rE1/xBBi0DV+PNQFaZacChbjH9fIZpDIE8r742itnAfQzRJIffGAdPyRh9OpqTR4SvVTYsLV7tukU3POoB6VV/REvq6uSEN0DPO1jW344aRKgiazuH6E61OuE1EoCUrRuzAn0oYSicYPforNT1kUwiopXj7YyBfVZWojm27h/mHdnfZlrN1llRiysHMtRr7KnFxLfpcafvfG5wIDAQAB", "测试加密方法");
 			System.out.println("加密后的数据："+result2);
 			
 			//解密

@@ -28,7 +28,8 @@ public class KeyManagement implements Serializable{
 		this.id = id;
 	}
 	
-	@Column(name = "id_card")
+	
+	@Column(name = "id_card",unique=true)
 	public String getIdCard() {
 		return idCard;
 	}
