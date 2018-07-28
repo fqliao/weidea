@@ -50,7 +50,7 @@ public class QueryRecordRepository {
 				java.math.BigInteger gasPrice = new BigInteger("30000000");
 				java.math.BigInteger gasLimit = new BigInteger("30000000");
 				java.math.BigInteger initialWeiValue = new BigInteger("0");
-				
+
 				LOGGER.info("beginning get the queryRecord");
 				// 部署合约
 				String contractAddress = contractAddressRepository.findAddressByCategory(QueryRecord.class.getName());
@@ -87,7 +87,8 @@ public class QueryRecordRepository {
 			MedicalQueryRecord medicalQueryRecord = new MedicalQueryRecord();
 			medicalQueryRecord.setIdCard(list.get(0).getValue().toString());
 			medicalQueryRecord.setHospitalAndDoctor(list.get(1).getValue().toString());
-			medicalQueryRecord.setDate((list.get(0).getValue().toString()));
+			medicalQueryRecord.setIndex(Integer.valueOf(list.get(2).getValue().toString()));
+			medicalQueryRecord.setDate((list.get(3).getValue().toString()));
 			return medicalQueryRecord;
 		} catch (Exception e) {
 			throw new BlockChainException(e);

@@ -65,6 +65,29 @@ public class RecordService {
 		return false;
 	}
 
+	public List<MedicalRecord> searchRecord(String idCard, String token) {
+		List<MedicalRecord> records = new ArrayList();
+		int count = medicalRecordRepository.count();
+		LOGGER.info("===========从链上查询到就诊记录共有：" + count + "条");
+		for (int i = 0; i < count; i++) {
+			MedicalRecord encryptMedicalRecord = medicalRecordRepository.findByIndex(i);
+			MedicalRecord mr = new MedicalRecord();
+			mr.setCategory(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getCategory()));
+			mr.setDiagnosis(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getDiagnosis()));
+			mr.setHospitalAndDoctor(
+					secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getHospitalAndDoctor()));
+			mr.setItem(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getItem()));
+			mr.setProposal(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getProposal()));
+			mr.setDate(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getDate()));
+			mr.setIdCard(idCard);
+
+			records.add(mr);
+		}
+
+		return records;
+
+	}
+
 	public List<MedicalRecord> searchRecord(SearchMedicalRecordReq searchMedicalRecordReq) {
 		String idCard = searchMedicalRecordReq.getIdCard();
 		String token = searchMedicalRecordReq.getPassword();
@@ -145,8 +168,7 @@ public class RecordService {
 		mr.setCategory(record.getCategory());
 		mr.setItem(record.getItem());
 		mr.setProposal(record.getProposal());
-		// 测试LULU
-		mr.setDiagnosis("xxxxxx");
+		mr.setDiagnosis(record.getDiagnosis());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String date = sdf.format(record.getDate());
 		mr.setDate(date);
