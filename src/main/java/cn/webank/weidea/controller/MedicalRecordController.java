@@ -27,6 +27,7 @@ import cn.webank.weidea.entity.Hospital;
 import cn.webank.weidea.entity.MedicalQueryRecord;
 import cn.webank.weidea.entity.MedicalRecord;
 import cn.webank.weidea.entity.User;
+import cn.webank.weidea.model.RecordRequest;
 import cn.webank.weidea.model.QueryRecordResponse;
 import cn.webank.weidea.service.QueryService;
 import cn.webank.weidea.service.RecordService;
@@ -111,6 +112,18 @@ public class MedicalRecordController {
 		Map<String, List<QueryRecordResponse>> result = new HashMap();
 		result.put("infos", mrs);
 		return result;
+	}
+
+	@RequestMapping(value = "api/onerecord", method = RequestMethod.POST)
+	@ResponseBody
+	public String getByIndex(@RequestBody String requestBody, HttpSession session) {
+		RecordRequest recordRequest = new Gson().fromJson(requestBody, RecordRequest.class);
+		if (session.getAttribute("user") != null) {
+			User user = (User) session.getAttribute("user");
+			recordRequest.setIdCard(user.getIdCard());
+			recordRequest.setPassword(user.getToken());
+		}
+		return new Gson().toJson(recordService.getRecord(recordRequest));
 	}
 
 }

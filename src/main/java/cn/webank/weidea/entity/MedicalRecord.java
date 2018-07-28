@@ -4,6 +4,7 @@ public class MedicalRecord {
 	private String date;
 	private String idCard;
 	private String hospitalAndDoctor;
+	private String hospital;
 	private String diagnosis;
 	private String proposal;
 	private String category;
@@ -36,6 +37,15 @@ public class MedicalRecord {
 		return idCard;
 	}
 
+	public String getHospital() {
+		return hospital;
+	}
+
+	public void setHospital(String hospital) {
+		this.hospitalAndDoctor = hospital;
+		this.hospital = hospital;
+	}
+
 	public void setIdCard(String idCard) {
 		this.idCard = idCard;
 	}
@@ -45,6 +55,7 @@ public class MedicalRecord {
 	}
 
 	public void setHospitalAndDoctor(String hospitalAndDoctor) {
+		this.hospital = hospitalAndDoctor;
 		this.hospitalAndDoctor = hospitalAndDoctor;
 	}
 

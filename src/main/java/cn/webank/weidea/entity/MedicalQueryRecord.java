@@ -17,10 +17,16 @@ public class MedicalQueryRecord {
 	}
 
 	public String getHospitalAndDoctor() {
+		if (!this.hospitalAndDoctor.contains(",")) {
+			this.hospitalAndDoctor = this.hospitalAndDoctor.replace("And", ",");
+		}
 		return hospitalAndDoctor;
 	}
 
 	public void setHospitalAndDoctor(String hospitalAndDoctor) {
+		if (!hospitalAndDoctor.contains(",")) {
+			hospitalAndDoctor = hospitalAndDoctor.replace("And", ",");
+		}
 		this.hospitalAndDoctor = hospitalAndDoctor;
 	}
 

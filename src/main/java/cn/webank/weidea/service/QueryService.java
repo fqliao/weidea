@@ -48,22 +48,19 @@ public class QueryService {
 			String key = medicalQueryRecord.getHospitalAndDoctor() + medicalQueryRecord.getDate();
 			if (!queryRecordResponsesMap.containsKey(key)) {
 				queryRecordResponsesMap.put(key, new QueryRecordResponse(medicalQueryRecord.getIdCard(),
-						medicalQueryRecord.getHospitalAndDoctor(), medicalQueryRecord.getDate(), ""));
+						medicalQueryRecord.getHospitalAndDoctor(), medicalQueryRecord.getDate()));
 
 			}
 			QueryRecordResponse queryRecordResponse = queryRecordResponsesMap.get(key);
-			queryRecordResponse.getNumberSet().add(String.valueOf(medicalQueryRecord.getIndex()));
+			queryRecordResponse.getNumberSet().add(medicalQueryRecord.getIndex());
 			// queryRecordResponse
 			// .setNumberRecord(queryRecordResponse.getNumberRecord() + "," +
 			// medicalQueryRecord.getIndex());
 		}
 		for (QueryRecordResponse queryRecordResponse : queryRecordResponsesMap.values()) {
-			StringBuilder stringBuilder = new StringBuilder();
-			for (String number : queryRecordResponse.getNumberSet()) {
-				stringBuilder.append(number + ",");
+			for (Integer number : queryRecordResponse.getNumberSet()) {
+				queryRecordResponse.getNumRecord().add(number);
 			}
-			stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-			queryRecordResponse.setNumberRecord(stringBuilder.toString());
 			queryRecordResponse.setNumberSet(null);
 		}
 		List<QueryRecordResponse> recordResponsesList = new ArrayList<>();

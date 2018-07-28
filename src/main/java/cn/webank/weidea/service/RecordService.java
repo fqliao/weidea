@@ -19,6 +19,7 @@ import cn.webank.weidea.dto.SaveMedicalRecordReq;
 import cn.webank.weidea.dto.SearchMedicalRecordReq;
 import cn.webank.weidea.entity.MedicalQueryRecord;
 import cn.webank.weidea.entity.MedicalRecord;
+import cn.webank.weidea.model.RecordRequest;
 import cn.webank.weidea.util.EncryptUtils;
 import cn.webank.weidea.util.HttpUtil;
 
@@ -200,6 +201,23 @@ public class RecordService {
 			exception.printStackTrace();
 		}
 		return 0;
+	}
+
+	public MedicalRecord getRecord(RecordRequest recordRequest) {
+		String idCard = recordRequest.getIdCard();
+		String token = recordRequest.getPassword();
+		MedicalRecord mr = new MedicalRecord();
+		MedicalRecord encryptMedicalRecord = medicalRecordRepository
+				.findByIndex(Integer.valueOf(recordRequest.getIndex()));
+		mr.setCategory(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getCategory()));
+		mr.setDiagnosis(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getDiagnosis()));
+		mr.setHospitalAndDoctor(
+				secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getHospitalAndDoctor()));
+		mr.setItem(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getItem()));
+		mr.setProposal(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getProposal()));
+		mr.setDate(secretKeyService.getPlaintext(idCard, token, encryptMedicalRecord.getDate()));
+		mr.setIdCard(idCard);
+		return mr;
 	}
 
 }

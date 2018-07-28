@@ -1,38 +1,39 @@
 package cn.webank.weidea.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class QueryRecordResponse {
-	private String numberRecord;
+	private List<Integer> numRecord = new ArrayList<>();
 	private String idCard;
 	private String hospital;
 	private String date;
-	private Set<String> numberSet;
+	private Set<Integer> numberSet;
 
-	public QueryRecordResponse(String idCard, String hospital, String date, String numberRecord) {
+	public QueryRecordResponse(String idCard, String hospital, String date) {
 		super();
 		this.idCard = idCard;
 		this.hospital = hospital;
 		this.date = date;
-		this.numberRecord = numberRecord;
 		this.numberSet = new HashSet<>();
 	}
 
-	public String getNumberRecord() {
-		return numberRecord;
+	public List<Integer> getNumRecord() {
+		return numRecord;
 	}
 
-	public Set<String> getNumberSet() {
+	public Set<Integer> getNumberSet() {
 		return numberSet;
 	}
 
-	public void setNumberSet(Set<String> numberSet) {
+	public void setNumberSet(Set<Integer> numberSet) {
 		this.numberSet = numberSet;
 	}
 
-	public void setNumberRecord(String numberRecord) {
-		this.numberRecord = numberRecord;
+	public void setNumberRecord(List<Integer> numberRecord) {
+		this.numRecord = numberRecord;
 	}
 
 	public String getIdCard() {
@@ -57,11 +58,5 @@ public class QueryRecordResponse {
 
 	public void setDate(String date) {
 		this.date = date;
-	}
-
-	@Override
-	public String toString() {
-		return "QueryRecordResponse [numberRecord=" + numberRecord + ", idCard=" + idCard + ", hospital=" + hospital
-				+ ", date=" + date + "]";
 	}
 }
