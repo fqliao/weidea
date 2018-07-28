@@ -3,7 +3,7 @@
 		"status": true
 	},
 	"record": {
-		"MedicalRecord": [
+		"medicalRecords": [
 			{
 				"idCard": "35062348437192371973",
 				"hospital": "xxx医院",
@@ -37,23 +37,23 @@
 		"status": true
 	},
 	"searchRecord": {
-		"info": [
+		"infos": [
 			{
 				"idCard": "257923754328745",
 				"hospital": "xx医院,xx医生",
-				"recordUrl": "hashzhi",
+				"recordHash": "hashzhi",
 				"date": 20180808
 			},
 			{
 				"idCard": "257923754328745",
 				"hospital": "xx医院,xx医生",
-				"recordUrl": "hashzhi",
+				"recordHash": "hashzhi",
 				"date": 20180808
 			},
 			{
 				"idCard": "257923754328745",
 				"hospital": "xx医院,xx医生",
-				"recordUrl": "hashzhi",
+				"recordHash": "hashzhi",
 				"date": 20180808
 			}
 		]

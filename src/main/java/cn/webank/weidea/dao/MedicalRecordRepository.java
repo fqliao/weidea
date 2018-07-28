@@ -3,8 +3,6 @@ package cn.webank.weidea.dao;
 import java.math.BigInteger;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.bcos.channel.client.Service;
 import org.bcos.web3j.abi.datatypes.Type;
 import org.bcos.web3j.abi.datatypes.Utf8String;
@@ -30,18 +28,10 @@ public class MedicalRecordRepository {
 	private ContractAddressRepository contractAddressRepository;
 	private Record record;
 
-	@PostConstruct
-	private void init() {
-		try {
-			service.run();
-		} catch (Exception e) {
-			throw new BlockChainException(e);
-		}
-	}
-
 	private Record getRecord() {
 		if (record == null) {
 			try {
+				service.run();
 				ChannelEthereumService channelEthereumService = new ChannelEthereumService();
 				channelEthereumService.setChannelService(service);
 

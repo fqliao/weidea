@@ -3,6 +3,8 @@ package cn.webank.weidea.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,9 +22,14 @@ import cn.webank.weidea.dto.SearchMedicalRecordReq;
 import cn.webank.weidea.entity.Hospital;
 import cn.webank.weidea.entity.MedicalRecord;
 import cn.webank.weidea.entity.User;
+import cn.webank.weidea.service.RecordService;
 
 @Controller
 public class MedicalRecordController {
+	
+	@Autowired
+	RecordService recordService;
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(MedicalRecordController.class);
 	
 	@RequestMapping(value="api/record",method=RequestMethod.POST)
@@ -36,14 +43,22 @@ public class MedicalRecordController {
 		SearchMedicalRecordReq searchMedicalRecordReq = new SearchMedicalRecordReq();
 		searchMedicalRecordReq = request.fromJson(requestBody,SearchMedicalRecordReq.class);
 		
-		System.out.println(searchMedicalRecordReq.getStartTime());
+		LOGGER.info("========获取到查询条件："+searchMedicalRecordReq.toString()+"========");
 		
+		LOGGER.info("==========开始搜索就诊记录===========");
+		List<MedicalRecord> mrs=recordService.searchRecord(searchMedicalRecordReq);
+		
+		
+		for(MedicalRecord mr: mrs) {
+			LOGGER.info("===========查询到就诊记录： "+mr.toString()+"==============");
+		}	
 		
 		return response;
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="api/saveRecord",method=RequestMethod.POST)
-	public @ResponseBody Gson saveMedicalRecord(
+	public boolean saveMedicalRecord(
 			@RequestBody String requestBody,
 			HttpServletRequest httpRequest,
 			HttpServletResponse httpResponse) {
@@ -51,15 +66,15 @@ public class MedicalRecordController {
 		//获取前端提交的信息
 		Gson request = new Gson();
 		SaveMedicalRecordReq saveMedicalRecordReq = new SaveMedicalRecordReq();
-		saveMedicalRecordReq = request.fromJson(requestBody,SaveMedicalRecordReq.class);
-		
-		
-		Hospital hospital = new Hospital();
-		hospital.setOrganizationCodeNumber(saveMedicalRecordReq.getHospital());
-		User user = new User();
-		user.setIdCard(saveMedicalRecordReq.getIdCard());
-		
-		return response;
+		saveMedicalRecordReq = request.fromJson(requestBody,SaveMedicalRecordReq.class);		
+		LOGGER.info("========获取到录入信息："+saveMedicalRecordReq.toString()+"========");
+//		
+//		Hospital hospital = new Hospital();
+//		hospital.setOrganizationCodeNumber(saveMedicalRecordReq.getHospital());
+//		User user = new User();
+//		user.setIdCard(saveMedicalRecordReq.getIdCard());		
+				
+		return recordService.savaRecord(saveMedicalRecordReq);
 	}
 	
 	public static void main(String[] args) {
