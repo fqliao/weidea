@@ -47,7 +47,7 @@ export default {
 <style lang = "scss">
 .index {
   img {
-    width: 30vw;
+    width: 25vw;
   }
   margin: 0 1rem;
   text-align: center;

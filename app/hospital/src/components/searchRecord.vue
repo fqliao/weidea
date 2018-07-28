@@ -38,8 +38,8 @@
               <td class="is-left">{{scope.row.hospital}}</td>
               <td class="is-left">{{scope.row.doctor}}</td>
               <td class="is-left">
-              	<span v-for="(url, index) in scope.row.numRecord">
-		              <a class="showItem" @click="showItem(url)">记录{{index+1}}</a>
+              	<span v-for="(i, index) in scope.row.numRecord">
+		              <a class="showItem" @click="showItem(i)">记录{{index+1}}</a>
 		            </span>
               </td>
             </template>
@@ -171,10 +171,13 @@ export default {
     closeDetail() {
     	this.openDetail = false
     },
-    showItem(url) {
-    	this.$http.get(url).then(res => {
-    	// this.$http.get('/api/singleRecord').then(res => {
-    		this.record = res.body
+    showItem(index) {
+      let head = {
+        index: index,
+
+      }
+    	this.$http.get('/api/onerecord').then(res => {
+    		this.record = res.body.MedicalRecord
     		this.openDetail = true
     	})
     }	
